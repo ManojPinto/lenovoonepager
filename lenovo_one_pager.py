@@ -710,7 +710,14 @@ st.set_page_config(
 st.markdown("""
 <style>
     #MainMenu, header, footer               { visibility: hidden; height: 0; }
-    .stApp                                  { margin: 0 !important; padding: 0 !important; background: #13131f; }
+    .stApp                                  { margin: 0 !important; padding: 0 !important;
+                                            background:
+                                              radial-gradient(circle at 15% 45%, rgba(160,18,18,0.75) 0%, transparent 45%),
+                                              radial-gradient(circle at 80% 85%, rgba(10,12,80,0.85)  0%, transparent 42%),
+                                              radial-gradient(circle at 65% 18%, rgba(130,10,130,0.5) 0%, transparent 40%),
+                                              radial-gradient(circle at 48% 62%, rgba(95,10,155,0.6)  0%, transparent 50%),
+                                              radial-gradient(circle at 90% 30%, rgba(60,0,120,0.55)  0%, transparent 35%),
+                                              linear-gradient(135deg, #5c0808 0%, #4a0a6e 48%, #0d0b3e 100%) !important; }
     .block-container                        { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
     [data-testid="stToolbar"]               { display: none !important; }
     [data-testid="stDecoration"]            { display: none !important; }

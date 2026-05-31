@@ -1832,21 +1832,28 @@ st.markdown("""
     margin: 0 !important;
     align-items: center !important;
   }
-  /* Small logout button */
+  /* Power-off button */
   [data-testid="stHorizontalBlock"]:first-of-type button {
-    padding: 4px 14px !important;
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    height: auto !important;
+    width: 38px !important;
+    height: 38px !important;
     min-height: unset !important;
-    border-radius: 6px !important;
-    background: rgba(255,255,255,0.12) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255,255,255,0.25) !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(229,0,0,0.15) !important;
+    border: 2px solid #e50000 !important;
+    color: #e50000 !important;
+    font-size: 1.1rem !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background 0.2s, box-shadow 0.2s !important;
+    box-shadow: 0 0 8px rgba(229,0,0,0.3) !important;
   }
   [data-testid="stHorizontalBlock"]:first-of-type button:hover {
     background: #e50000 !important;
-    border-color: #e50000 !important;
+    color: #fff !important;
+    box-shadow: 0 0 16px rgba(229,0,0,0.7) !important;
   }
 </style>
 """, unsafe_allow_html=True)
@@ -1876,7 +1883,7 @@ with col_welcome:
 
 with col_logout:
     st.markdown("<div style='padding:4px 0 0 0'></div>", unsafe_allow_html=True)
-    if st.button("Logout", use_container_width=True):
+    if st.button("⏻", use_container_width=False, help="Logout"):
         st.session_state.pop("lenovo_id", None)
         st.session_state.pop("lenovo_name", None)
         st.rerun()

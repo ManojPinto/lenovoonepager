@@ -1792,6 +1792,15 @@ st.markdown("""
 
 if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
 
+    # Top-right label — no highlight, plain text
+    st.markdown("""
+    <div style="position:fixed;top:12px;right:20px;
+                color:#aaa;font-size:0.72rem;letter-spacing:0.5px;
+                z-index:9999;">
+        Introduced by India CEC Training Team
+    </div>
+    """, unsafe_allow_html=True)
+
     # Centre the form on the page
     _, mid, _ = st.columns([1, 2, 1])
 
@@ -1799,12 +1808,6 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
         st.markdown("""
         <div style="height:60px"></div>
         <div style="text-align:center;">
-            <div style="display:inline-block;background:#e50000;color:#fff;
-                        font-size:0.7rem;font-weight:700;letter-spacing:1.5px;
-                        text-transform:uppercase;padding:4px 14px;
-                        border-radius:20px;margin-bottom:18px;">
-                Introduced by India CEC Training Team
-            </div>
             <h1 style="font-size:1.7rem;font-weight:900;letter-spacing:3px;
                        text-transform:uppercase;color:#fff;
                        text-shadow:0 2px 16px rgba(229,0,0,0.4);margin-bottom:6px;

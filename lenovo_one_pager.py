@@ -31,7 +31,6 @@ ALLOWED_USERS = {
     'abellad@lenovo.com': 'Amit Bellad',
     'abhange@lenovo.com': 'Anushka',
     'abharadwaj1@lenovo.com': 'Anurag Bharadwaj',
-    'nitingar@lenovo.com': 'Nitin Garg',
     'abhimawad@lenovo.com': 'ARYAN BHIMAWAD',
     'abhongade@lenovo.com': 'Amol Shioshankar Bhongade',
     'abiswal3@lenovo.com': 'Ankit Biswal',
@@ -40,7 +39,6 @@ ALLOWED_USERS = {
     'achapparband@lenovo.com': 'Akil Kadarali Chapparband',
     'achoubey2@lenovo.com': 'Arshit Choubey',
     'acv@lenovo.com': 'Andrew William C V',
-    'vraj@lenovo.com': 'Vinil Raj',
     'ad1@lenovo.com': 'Akshay Kumar D',
     'adas8@lenovo.com': 'Ayan Das',
     'adas9@lenovo.com': 'Adyasha Das',
@@ -168,7 +166,6 @@ ALLOWED_USERS = {
     'bd3@lenovo.com': 'Bharath M D',
     'bdas2@lenovo.com': 'Bishal Das',
     'bgeorge4@lenovo.com': 'Bibin George',
-    'mpintoo@lenovo.com': 'Manoj Pinto',
     'bhajira@lenovo.com': 'Bi Bi Hajira',
     'bmuneer@lenovo.com': 'Burhan Muneer',
     'bnikhath@lenovo.com': 'Nikhath Begum',
@@ -1306,12 +1303,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </head>
 <body>
 
-<!-- PAGE HEADING -->
-<div class="page-heading">
-  <h1>Lenovo One Pager</h1>
-  <p>Introduced by the IN CEC Training Team</p>
-</div>
-
 <!-- ANNOUNCEMENT BANNERS -->
 <div class="banner-strip">
 
@@ -1820,18 +1811,50 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
 # ║  DASHBOARD — shown after successful Lenovo ID entry                     ║
 # ╚══════════════════════════════════════════════════════════════════════════╝
 
-# Thin top strip showing who is logged in + logout button
-top_left, top_right = st.columns([8, 1])
-with top_left:
-    name = st.session_state.get("lenovo_name", st.session_state["lenovo_id"])
+# ── Top bar: Title (left)  |  Welcome + Logout (right) ─────────────────────
+name = st.session_state.get("lenovo_name", st.session_state["lenovo_id"])
+
+st.markdown("""
+<style>
+  /* Dark branded header row */
+  [data-testid="stHorizontalBlock"]:first-of-type {
+    background: linear-gradient(135deg, #0a0a23 0%, #1a1a4e 55%, #2d0036 100%);
+    border-bottom: 3px solid #e50000;
+    padding: 6px 24px !important;
+    margin: 0 !important;
+    align-items: center !important;
+  }
+</style>
+""", unsafe_allow_html=True)
+
+col_title, col_welcome, col_logout = st.columns([6, 2.5, 1])
+
+with col_title:
+    st.markdown("""
+    <div style="padding:6px 0 4px 0;">
+      <div style="font-size:1.3rem;font-weight:900;letter-spacing:3px;
+                  text-transform:uppercase;color:#fff;
+                  text-shadow:0 2px 14px rgba(229,0,0,0.45);">
+        Lenovo One Pager
+      </div>
+      <div style="font-size:0.71rem;color:#888;margin-top:2px;letter-spacing:0.5px;">
+        Introduced by the IN CEC Training Team
+      </div>
+    </div>""", unsafe_allow_html=True)
+
+with col_welcome:
     st.markdown(
-        f"<p style='color:#666;font-size:0.75rem;padding:4px 8px;margin:0;'>"
-        f"&#128100; Welcome, <b style='color:#ccc'>{name}</b></p>",
+        f"<div style='padding:10px 8px 0 0;text-align:right;"
+        f"color:#aaa;font-size:0.82rem;'>"
+        f"&#128100; Welcome, <b style='color:#fff'>{name}</b></div>",
         unsafe_allow_html=True
     )
-with top_right:
+
+with col_logout:
+    st.markdown("<div style='padding:4px 0 0 0'></div>", unsafe_allow_html=True)
     if st.button("Logout", use_container_width=True):
-        del st.session_state["lenovo_id"]
+        st.session_state.pop("lenovo_id", None)
+        st.session_state.pop("lenovo_name", None)
         st.rerun()
 
 # ── Render the full HTML dashboard ──────────────────────────────────────────

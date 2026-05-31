@@ -1678,6 +1678,9 @@ st.markdown("""
     .st-emotion-cache-h4xjcd               { display: none !important; }
     button[title="Manage app"]              { display: none !important; }
     button[aria-label="Manage app"]         { display: none !important; }
+    [data-testid="stBottom"]                { display: none !important; }
+    .stBottomBlockContainer                 { display: none !important; }
+    [class*="bottom"]                       { display: none !important; }
     [data-testid="stSidebar"]               { display: none !important; }
     iframe                                  { border: none !important; display: block; margin: 0 !important; padding: 0 !important; }
     [data-testid="stVerticalBlock"]         { gap: 0 !important; }
@@ -1759,6 +1762,29 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Hide "Manage app" toolbar injected by Streamlit Cloud
+st.markdown("""
+<img src="x" onerror="
+(function(){
+  function hide(){
+    document.querySelectorAll('button,a,[role=button]').forEach(function(el){
+      if(el.innerText && el.innerText.trim()==='Manage app'){
+        var p=el;
+        for(var i=0;i<6;i++){
+          p.style.setProperty('display','none','important');
+          if(p.parentElement) p=p.parentElement; else break;
+        }
+      }
+    });
+    var bottom=document.querySelector('[data-testid=stBottom]');
+    if(bottom) bottom.style.setProperty('display','none','important');
+  }
+  hide();
+  setInterval(hide,800);
+  new MutationObserver(hide).observe(document.body,{childList:true,subtree:true});
+})();
+" style="display:none" />
+""", unsafe_allow_html=True)
 
 # ╔══════════════════════════════════════════════════════════════════════════╗
 # ║  LOGIN GATE — require Lenovo ID before showing the dashboard            ║

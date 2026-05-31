@@ -1851,13 +1851,13 @@ col_title, col_welcome, col_logout = st.columns([6, 2.5, 1])
 
 with col_title:
     st.markdown("""
-    <div style="padding:6px 0 4px 0;">
+    <div style="padding:8px 0 12px 0;">
       <div style="font-size:1.3rem;font-weight:900;letter-spacing:3px;
                   text-transform:uppercase;color:#fff;
                   text-shadow:0 2px 14px rgba(229,0,0,0.45);">
         Lenovo One Pager
       </div>
-      <div style="font-size:0.71rem;color:#888;margin-top:2px;letter-spacing:0.5px;">
+      <div style="font-size:0.71rem;color:#888;margin-top:3px;letter-spacing:0.5px;">
         Introduced by the IN CEC Training Team
       </div>
     </div>""", unsafe_allow_html=True)

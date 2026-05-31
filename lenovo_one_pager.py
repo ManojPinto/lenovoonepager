@@ -1314,7 +1314,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   </div>
 
   <div class="banner-card">
-    <<img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
          alt="AI Talent Spotlight"
          style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
     </div>

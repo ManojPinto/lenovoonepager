@@ -944,8 +944,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
 
     /* ANNOUNCEMENT BANNERS */
-    .banner-card { overflow: hidden; }
-
     .banner-strip {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -1616,45 +1614,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     document.getElementById('viewer-frame').src = '';
     if (restorePanel) document.getElementById(currentPanelId).classList.add('active');
   }
-
-  // ── Banner rotation: images cycle left every 3 s (cards stay in place) ──
-  (function() {
-    const URLS = [
-      'https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png',
-      'https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png',
-      'https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png'
-    ];
-    let offset = 0;
-
-    function rotateBanners() {
-      const imgs = document.querySelectorAll('.banner-card img');
-      offset = (offset + 1) % 3;
-
-      imgs.forEach(function(img, i) {
-        var nextSrc = URLS[(i + offset) % 3];
-
-        // Slide current image out to the left
-        img.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-        img.style.transform  = 'translateX(-110%)';
-        img.style.opacity    = '0';
-
-        setTimeout(function() {
-          img.src = nextSrc;
-          img.style.transition = 'none';
-          img.style.transform  = 'translateX(110%)';  // appear from right
-          img.style.opacity    = '0';
-          img.getBoundingClientRect();               // force reflow
-
-          img.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-          img.style.transform  = 'translateX(0)';
-          img.style.opacity    = '1';
-        }, 520);
-      });
-    }
-
-    setInterval(rotateBanners, 3000);
-  })();
-  // ─────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll('.doc-pill[data-href]').forEach(pill => {
     pill.addEventListener('click', () => {

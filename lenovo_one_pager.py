@@ -943,49 +943,39 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       color: #999;
     }
 
-    /* BANNER CAROUSEL */
-    .banner-carousel {
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #000;
+    /* ANNOUNCEMENT BANNERS */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .banner-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 12px 36px;
+      background: rgba(0,0,0,0.25);
       border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .banner-track {
-      display: flex;
-      width: 300%;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .banner-slide {
-      width: 33.333%;
       flex-shrink: 0;
     }
-    .banner-slide img {
+    .banner-card {
+      border-radius: 10px;
+      overflow: hidden;
+      opacity: 0;
+      animation: slideUp 0.55s ease forwards;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .banner-card:nth-child(1) { animation-delay: 0.05s; }
+    .banner-card:nth-child(2) { animation-delay: 0.2s;  }
+    .banner-card:nth-child(3) { animation-delay: 0.35s; }
+    .banner-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(229,0,0,0.25);
+    }
+    .banner-card img {
       width: 100%;
-      height: 160px;
+      height: 140px;
       object-fit: cover;
       display: block;
-    }
-    .banner-dots {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 7px;
-      z-index: 10;
-    }
-    .banner-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .banner-dot.active {
-      background: #e50000;
-      transform: scale(1.3);
     }
 
     /* MAIN WRAPPER */
@@ -1308,23 +1298,16 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </head>
 <body>
 
-<!-- BANNER CAROUSEL -->
-<div class="banner-carousel">
-  <div class="banner-track" id="bannerTrack">
-    <div class="banner-slide">
-      <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png" alt="Banner 1" />
-    </div>
-    <div class="banner-slide">
-      <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png" alt="Banner 2" />
-    </div>
-    <div class="banner-slide">
-      <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png" alt="Banner 3" />
-    </div>
+<!-- ANNOUNCEMENT BANNERS -->
+<div class="banner-strip">
+  <div class="banner-card">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png" alt="Banner 1" />
   </div>
-  <div class="banner-dots">
-    <div class="banner-dot active" onclick="goToSlide(0)"></div>
-    <div class="banner-dot"        onclick="goToSlide(1)"></div>
-    <div class="banner-dot"        onclick="goToSlide(2)"></div>
+  <div class="banner-card">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png" alt="Banner 2" />
+  </div>
+  <div class="banner-card">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png" alt="Banner 3" style="object-fit:contain;background:#000;" />
   </div>
 </div>
 
@@ -1561,23 +1544,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 <script>
   let currentPanelId = 'lenovo-urls';
-
-  // ── Banner Carousel ──────────────────────────────────────────────────────
-  let currentSlide = 0;
-  const totalSlides = 3;
-  const track = document.getElementById('bannerTrack');
-  const dots  = document.querySelectorAll('.banner-dot');
-
-  function goToSlide(n) {
-    currentSlide = n;
-    track.style.transform = 'translateX(-' + (100 / totalSlides * n) + '%)';
-    dots.forEach((d, i) => d.classList.toggle('active', i === n));
-  }
-
-  setInterval(() => {
-    goToSlide((currentSlide + 1) % totalSlides);
-  }, 3000);
-  // ─────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {

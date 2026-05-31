@@ -1793,7 +1793,7 @@ st.markdown("""
 if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
 
     # Centre the form on the page
-    _, mid, _ = st.columns([1, 1.6, 1])
+    _, mid, _ = st.columns([1, 2, 1])
 
     with mid:
         st.markdown("""
@@ -1807,7 +1807,8 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
             </div>
             <h1 style="font-size:1.7rem;font-weight:900;letter-spacing:3px;
                        text-transform:uppercase;color:#fff;
-                       text-shadow:0 2px 16px rgba(229,0,0,0.4);margin-bottom:6px;">
+                       text-shadow:0 2px 16px rgba(229,0,0,0.4);margin-bottom:6px;
+                       text-align:center;width:100%;display:block;">
                 Lenovo One Pager
             </h1>
             <p style="color:#888;font-size:0.85rem;margin-bottom:30px;">

@@ -1602,8 +1602,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       <div class="mdoa-form">
 
         <div class="mdoa-hint">
-          <b>How to use:</b> Enter the Case Created Date from your file as the Start Date.
-          Enter today's or reference date as End Date. Type the partner name to auto-detect LFR / Non-LFR.
+          <b>How to Use:</b> Select the Invoice Date and Case Created Date, then choose whether the partner is LFR or Non-LFR.
         </div>
 
         <div class="mdoa-field">

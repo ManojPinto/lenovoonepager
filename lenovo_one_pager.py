@@ -944,6 +944,15 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
 
     /* ANNOUNCEMENT BANNERS */
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .banner-card { animation: slideInLeft 0.6s ease forwards; opacity: 0; }
+    .banner-card:nth-child(1) { animation-delay: 0.0s; }
+    .banner-card:nth-child(2) { animation-delay: 0.2s; }
+    .banner-card:nth-child(3) { animation-delay: 0.4s; }
+
     .banner-strip {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;

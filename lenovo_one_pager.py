@@ -1319,12 +1319,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
          style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
-  <div class="banner-card">
-    <div class="banner-icon">⭐</div>
-    <div>
-      <div class="banner-tag">Info</div>
-      <div class="banner-text">Banner 3 — Content coming soon</div>
-    </div>
+  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png"
+         alt="Banner 3"
+         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
 </div>

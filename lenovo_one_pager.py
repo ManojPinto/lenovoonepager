@@ -1402,14 +1402,14 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <div class="nav-item" data-target="j2w">
       <span class="nav-icon">&#9889;</span> J2W URLs
     </div>
-    <div class="nav-item" data-target="community">
-      <span class="nav-icon">&#127760;</span> Our Community
-    </div>
     <div class="nav-item" data-target="powerbi">
       <span class="nav-icon">&#128268;</span> Power BI Links
     </div>
     <div class="nav-item" data-target="mdoa">
       <span class="nav-icon">&#128203;</span> MDOA Criteria Check
+    </div>
+    <div class="nav-item" data-target="community">
+      <span class="nav-icon">&#127760;</span> Our Community
     </div>
     <div class="nav-item" data-target="feedback">
       <span class="nav-icon">&#128172;</span> Help Us Improve

@@ -166,6 +166,7 @@ ALLOWED_USERS = {
     'bd3@lenovo.com': 'Bharath M D',
     'bdas2@lenovo.com': 'Bishal Das',
     'bgeorge4@lenovo.com': 'Bibin George',
+    'mpintoo@lenovo.com': 'Manoj Pinto',
     'bhajira@lenovo.com': 'Bi Bi Hajira',
     'bmuneer@lenovo.com': 'Burhan Muneer',
     'bnikhath@lenovo.com': 'Nikhath Begum',

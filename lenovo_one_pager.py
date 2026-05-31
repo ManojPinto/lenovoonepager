@@ -1658,7 +1658,9 @@ st.set_page_config(
 # ── Global CSS: hide Streamlit chrome on every page ─────────────────────────
 st.markdown("""
 <style>
-    #MainMenu, header, footer               { visibility: hidden; height: 0; }
+    #MainMenu, header, footer               { display: none !important; height: 0 !important; }
+    [data-testid="stHeader"]               { display: none !important; height: 0 !important; }
+    .stAppHeader                           { display: none !important; height: 0 !important; }
     .stApp                                  { margin: 0 !important; padding: 0 !important;
                                             background:
                                               radial-gradient(circle at 15% 45%, rgba(160,18,18,0.75) 0%, transparent 45%),

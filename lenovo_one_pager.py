@@ -944,38 +944,44 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
 
     /* ANNOUNCEMENT BANNERS */
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
     .banner-strip {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 12px;
-      padding: 12px 36px;
+      padding: 14px 36px;
       background: rgba(0,0,0,0.25);
       border-bottom: 1px solid rgba(255,255,255,0.07);
       flex-shrink: 0;
     }
     .banner-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px;
-      overflow: hidden;
-      opacity: 0;
-      animation: slideUp 0.55s ease forwards;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      min-height: 110px;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .banner-card:nth-child(1) { animation-delay: 0.05s; }
-    .banner-card:nth-child(2) { animation-delay: 0.2s;  }
-    .banner-card:nth-child(3) { animation-delay: 0.35s; }
     .banner-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 28px rgba(229,0,0,0.25);
+      background: rgba(229,0,0,0.1);
+      border-color: rgba(229,0,0,0.4);
     }
-    .banner-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      display: block;
+    .banner-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .banner-tag {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #e50000;
+      margin-bottom: 4px;
+    }
+    .banner-text {
+      font-size: 0.84rem;
+      color: #ccc;
+      font-weight: 500;
+      line-height: 1.45;
     }
 
     /* MAIN WRAPPER */
@@ -1300,15 +1306,25 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 <!-- ANNOUNCEMENT BANNERS -->
 <div class="banner-strip">
-  <div class="banner-card">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png" alt="Banner 1" />
+
+  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png"
+         alt="AI Talent Spotlight"
+         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
-  <div class="banner-card">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png" alt="Banner 2" />
+
+  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
+         alt="Banner 2"
+         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
-  <div class="banner-card">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png" alt="Banner 3" style="object-fit:contain;background:#000;" />
+
+  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;background:#000;display:flex;align-items:center;justify-content:center;">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png"
+         alt="Banner 3"
+         style="width:100%;height:auto;object-fit:contain;border-radius:10px;display:block;" />
   </div>
+
 </div>
 
 <!-- MAIN: SIDEBAR + CONTENT -->

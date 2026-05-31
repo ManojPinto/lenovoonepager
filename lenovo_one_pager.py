@@ -1405,6 +1405,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <div class="nav-item" data-target="community">
       <span class="nav-icon">&#127760;</span> Our Community
     </div>
+    <div class="nav-item" data-target="powerbi">
+      <span class="nav-icon">&#128268;</span> Power BI Links
+    </div>
     <div class="nav-item" data-target="mdoa">
       <span class="nav-icon">&#128203;</span> MDOA Criteria Check
     </div>
@@ -1592,6 +1595,28 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         </a>
         <a class="social-card" href="https://in.linkedin.com/company/lenovoin" target="_blank">
           <div class="social-icon li">in</div><span>Lenovo India &#8211; LinkedIn</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- POWER BI LINKS -->
+    <div class="panel" id="powerbi">
+      <div class="panel-title">&#128268; Power BI Links</div>
+      <div class="link-grid">
+        <a class="link-card" href="https://app.powerbi.com/groups/64f7f527-3669-41d8-8e1f-bcc908e5ba3b/reports/d320bc94-0d1e-4dac-aebb-fedb721550a4?experience=power-bi" target="_blank">
+          <span class="dot"></span>RRR
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/9b51258a-368b-4e7a-86e4-c6eb8706045d/e6401db93f9622598559?experience=power-bi" target="_blank">
+          <span class="dot"></span>IVA
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/0c95cce5-7a26-4922-9cf8-5fbdb5cc4430/reports/141ed06e-7cf2-4ac1-adbf-896a58332082/8599cbf93998c0268073?experience=power-bi" target="_blank">
+          <span class="dot"></span>Smart Resolution
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/0c95cce5-7a26-4922-9cf8-5fbdb5cc4430/reports/7f078364-a153-4faf-b144-cc26f6ce757c/8b865a3d9fbb194102b5?experience=power-bi" target="_blank">
+          <span class="dot"></span>HCS
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/0c95cce5-7a26-4922-9cf8-5fbdb5cc4430/reports/c8c77845-0205-4834-b052-122c3b8a39af/d3196307e08e1c260b01?experience=power-bi" target="_blank">
+          <span class="dot"></span>QA
         </a>
       </div>
     </div>

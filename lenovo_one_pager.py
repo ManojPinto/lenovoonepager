@@ -1599,34 +1599,36 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <!-- MDOA CRITERIA CHECK -->
     <div class="panel" id="mdoa">
       <div class="panel-title">&#128203; MDOA Criteria Check</div>
-      <div class="mdoa-form">
+      <div style="display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;">
 
-        <div class="mdoa-hint">
-          <b>How to Use:</b> Select the Invoice Date and Case Created Date, then choose whether the partner is LFR or Non-LFR.
+        <!-- LEFT: Form -->
+        <div class="mdoa-form" style="flex:0 0 340px;">
+          <div class="mdoa-hint">
+            <b>How to Use:</b> Select the Invoice Date and Case Created Date, then choose whether the partner is LFR or Non-LFR.
+          </div>
+          <div class="mdoa-field">
+            <label>Invoice Date <span>*</span></label>
+            <input type="date" id="mdoaStart" class="mdoa-input" />
+          </div>
+          <div class="mdoa-field">
+            <label>Case Created Date <span>*</span></label>
+            <input type="date" id="mdoaEnd" class="mdoa-input" />
+          </div>
+          <div class="mdoa-field">
+            <label>Type <span>*</span></label>
+            <select id="mdoaPartner" class="mdoa-input">
+              <option value="">-- Select --</option>
+              <option value="lfr">LFR</option>
+              <option value="non-lfr">Non-LFR</option>
+            </select>
+          </div>
+          <button class="mdoa-btn" onclick="calculateMDOA()">&#128200; Calculate</button>
         </div>
 
-        <div class="mdoa-field">
-          <label>Invoice Date <span>*</span></label>
-          <input type="date" id="mdoaStart" class="mdoa-input" />
+        <!-- RIGHT: Result -->
+        <div style="flex:1;min-width:240px;padding-top:6px;">
+          <div class="mdoa-result" id="mdoaResult"></div>
         </div>
-
-        <div class="mdoa-field">
-          <label>Case Created Date <span>*</span></label>
-          <input type="date" id="mdoaEnd" class="mdoa-input" />
-        </div>
-
-        <div class="mdoa-field">
-          <label>Type <span>*</span></label>
-          <select id="mdoaPartner" class="mdoa-input">
-            <option value="">-- Select --</option>
-            <option value="lfr">LFR</option>
-            <option value="non-lfr">Non-LFR</option>
-          </select>
-        </div>
-
-        <button class="mdoa-btn" onclick="calculateMDOA()">&#128200; Calculate</button>
-
-        <div class="mdoa-result" id="mdoaResult"></div>
 
       </div>
     </div>

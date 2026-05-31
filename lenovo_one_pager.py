@@ -49,9 +49,6 @@ ALLOWED_USERS = {
     'aedwin@lenovo.com': 'Akhil Edwin',
     'afathima1@lenovo.com': 'Almas Fathima',
     'afathima3@lenovo.com': 'Ayesha Fathima',
-    'mpintoo@lenovo.com': 'Manoj Pinto',
-    'vraj@lenovo.com': 'Vinil Raj',
-    'rmondal2@lenovo.com': 'Ramkrishna Mondal',
     'afernandez8@lenovo.com': 'Avrel Fernandez',
     'agadagwale@lenovo.com': 'Arpita Gadagwale',
     'agaur@lenovo.com': 'Akash Gaur',
@@ -1295,6 +1292,8 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     .mdoa-input:focus { border-color: #e50000; }
     .mdoa-input::placeholder { color: #555; }
     input[type="date"].mdoa-input::-webkit-calendar-picker-indicator { filter: invert(0.7); cursor: pointer; }
+    select.mdoa-input { cursor: pointer; }
+    select.mdoa-input option { background: #1e1e2e; color: #fff; }
     .mdoa-btn {
       padding: 11px 30px; background: #e50000; border: none;
       border-radius: 8px; color: #fff; font-size: 0.9rem; font-weight: 700;
@@ -1618,9 +1617,12 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         </div>
 
         <div class="mdoa-field">
-          <label>Partner / Customer Name <span>*</span></label>
-          <input type="text" id="mdoaPartner" class="mdoa-input"
-                 placeholder="e.g. Croma, Vijay Sales, Reliance Digital..." />
+          <label>Type <span>*</span></label>
+          <select id="mdoaPartner" class="mdoa-input">
+            <option value="">-- Select --</option>
+            <option value="lfr">LFR</option>
+            <option value="non-lfr">Non-LFR</option>
+          </select>
         </div>
 
         <button class="mdoa-btn" onclick="calculateMDOA()">&#128200; Calculate</button>
@@ -1754,7 +1756,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       res.innerHTML='&#9888; Entered date is older than the invoice date.'; return;
     }
     var days=mdoaWorkingDays(start,end);
-    var isLFR=mdoaIsLFR(pv);
+    var isLFR=pv==='lfr';
     var type=isLFR?'LFR':'Non-LFR';
     var limit=isLFR?15:7;
     var ok=days<=limit;

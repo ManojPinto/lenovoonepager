@@ -1606,12 +1606,12 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         </div>
 
         <div class="mdoa-field">
-          <label>Start Date <span>*</span> <small>(Case Created Date from file)</small></label>
+          <label>Invoice Date <span>*</span></label>
           <input type="date" id="mdoaStart" class="mdoa-input" />
         </div>
 
         <div class="mdoa-field">
-          <label>End Date <span>*</span></label>
+          <label>Case Created Date <span>*</span></label>
           <input type="date" id="mdoaEnd" class="mdoa-input" />
         </div>
 

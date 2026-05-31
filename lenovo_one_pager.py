@@ -1814,9 +1814,6 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
                        text-align:center;width:100%;display:block;">
                 Lenovo One Pager
             </h1>
-            <p style="color:#888;font-size:0.85rem;margin-bottom:30px;">
-                Sign in with your Lenovo ID to continue
-            </p>
         </div>
         """, unsafe_allow_html=True)
 

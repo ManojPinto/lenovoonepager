@@ -1839,11 +1839,6 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
                 st.session_state["lenovo_name"] = ALLOWED_USERS[val]
                 st.rerun()
 
-        st.markdown("""
-        <p style="text-align:center;color:#444;font-size:0.75rem;margin-top:24px;">
-            IN CEC Training Team &bull; IT Helpdesk Home &bull; 2026
-        </p>
-        """, unsafe_allow_html=True)
 
     st.stop()   # ← don't render dashboard until logged in
 

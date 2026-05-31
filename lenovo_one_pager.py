@@ -31,6 +31,7 @@ ALLOWED_USERS = {
     'abellad@lenovo.com': 'Amit Bellad',
     'abhange@lenovo.com': 'Anushka',
     'abharadwaj1@lenovo.com': 'Anurag Bharadwaj',
+    'nitingar@lenovo.com': 'Nitin Garg',
     'abhimawad@lenovo.com': 'ARYAN BHIMAWAD',
     'abhongade@lenovo.com': 'Amol Shioshankar Bhongade',
     'abiswal3@lenovo.com': 'Ankit Biswal',

@@ -46,6 +46,7 @@ ALLOWED_USERS = {
     'aedwin@lenovo.com': 'Akhil Edwin',
     'afathima1@lenovo.com': 'Almas Fathima',
     'afathima3@lenovo.com': 'Ayesha Fathima',
+    'mpintoo@lenovo.com': 'Manoj Pinto',
     'afernandez8@lenovo.com': 'Avrel Fernandez',
     'agadagwale@lenovo.com': 'Arpita Gadagwale',
     'agaur@lenovo.com': 'Akash Gaur',

@@ -18,6 +18,9 @@ ALLOWED_USERS = {
     'aahammed@lenovo.com': 'Aman Ahammed',
     'aahmed3@lenovo.com': 'Aqeeb Ahamed M B',
     'aahmed9@lenovo.com': 'A R Rizwan Ahmed',
+    'mpintoo@lenovo.com': 'Manoj Pinto',
+    'vraj@lenovo.com': 'Vinil Raj',
+    'rmondal2@lenovo.com': 'Ramkrishna Mondal',
     'aaman1@lenovo.com': 'Aman .',
     'aambika@lenovo.com': 'Ambika',
     'aanjum1@lenovo.com': 'Asfiya Anjum',
@@ -1273,6 +1276,55 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     .tw { background: #111; }
     .li { background: #0a66c2; }
 
+    /* MDOA */
+    .mdoa-form { max-width: 700px; }
+    .mdoa-field { margin-bottom: 18px; }
+    .mdoa-field label {
+      display: block; font-size: 0.78rem; font-weight: 700;
+      color: #aaa; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 7px;
+    }
+    .mdoa-field label span { color: #e50000; }
+    .mdoa-field label small { font-weight: 400; text-transform: none; color: #666; font-size: 0.72rem; }
+    .mdoa-input {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; color: #fff; font-size: 0.9rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .mdoa-input:focus { border-color: #e50000; }
+    .mdoa-input::placeholder { color: #555; }
+    input[type="date"].mdoa-input::-webkit-calendar-picker-indicator { filter: invert(0.7); cursor: pointer; }
+    .mdoa-btn {
+      padding: 11px 30px; background: #e50000; border: none;
+      border-radius: 8px; color: #fff; font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s; margin-top: 6px;
+    }
+    .mdoa-btn:hover { background: #b30000; }
+    .mdoa-result {
+      margin-top: 26px; border-radius: 12px; padding: 22px 26px;
+      display: none;
+    }
+    .mdoa-result-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: #888; margin-bottom: 14px;
+    }
+    .mdoa-result-grid { display: flex; gap: 36px; flex-wrap: wrap; }
+    .mdoa-result-cell small { font-size: 0.68rem; color: #777; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .mdoa-result-cell strong { font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .mdoa-result-cell.highlight strong { font-size: 1.1rem; }
+    .mdoa-error {
+      background: rgba(229,0,0,0.12); border: 1px solid rgba(229,0,0,0.35);
+      border-radius: 10px; padding: 14px 18px; color: #ff8080;
+      font-size: 0.86rem; margin-top: 18px;
+    }
+    .mdoa-hint {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 14px 18px; margin-bottom: 22px;
+      font-size: 0.81rem; color: #888; line-height: 1.6;
+    }
+    .mdoa-hint b { color: #ccc; }
+
     /* FEEDBACK */
     .feedback-box {
       background: linear-gradient(135deg, #1a1a2e, #2d0036);
@@ -1353,6 +1405,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     </div>
     <div class="nav-item" data-target="community">
       <span class="nav-icon">&#127760;</span> Our Community
+    </div>
+    <div class="nav-item" data-target="mdoa">
+      <span class="nav-icon">&#128203;</span> MDOA Criteria Check
     </div>
     <div class="nav-item" data-target="feedback">
       <span class="nav-icon">&#128172;</span> Help Us Improve
@@ -1542,6 +1597,39 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- MDOA CRITERIA CHECK -->
+    <div class="panel" id="mdoa">
+      <div class="panel-title">&#128203; MDOA Criteria Check</div>
+      <div class="mdoa-form">
+
+        <div class="mdoa-hint">
+          <b>How to use:</b> Enter the Case Created Date from your file as the Start Date.
+          Enter today's or reference date as End Date. Type the partner name to auto-detect LFR / Non-LFR.
+        </div>
+
+        <div class="mdoa-field">
+          <label>Start Date <span>*</span> <small>(Case Created Date from file)</small></label>
+          <input type="date" id="mdoaStart" class="mdoa-input" />
+        </div>
+
+        <div class="mdoa-field">
+          <label>End Date <span>*</span></label>
+          <input type="date" id="mdoaEnd" class="mdoa-input" />
+        </div>
+
+        <div class="mdoa-field">
+          <label>Partner / Customer Name <span>*</span></label>
+          <input type="text" id="mdoaPartner" class="mdoa-input"
+                 placeholder="e.g. Croma, Vijay Sales, Reliance Digital..." />
+        </div>
+
+        <button class="mdoa-btn" onclick="calculateMDOA()">&#128200; Calculate</button>
+
+        <div class="mdoa-result" id="mdoaResult"></div>
+
+      </div>
+    </div>
+
     <!-- FEEDBACK -->
     <div class="panel" id="feedback">
       <div class="panel-title">&#128172; Help Us Improve Together</div>
@@ -1617,6 +1705,76 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     document.getElementById('viewer-frame').src = '';
     if (restorePanel) document.getElementById(currentPanelId).classList.add('active');
   }
+
+  // ── MDOA Criteria Check ───────────────────────────────────────────────────
+  var LFR_KEYWORDS = [
+    'croma','woolworths wholesale','infiniti wholesale','infiniti retail',
+    'future value retail','pantaloons retail','home solutions retail','ezone',
+    'reliance digital','reliance hypermart',
+    'jumbo electronics',
+    'lotus electronics','cpr distributors',
+    'vijay sales',
+    'pai international',
+    'bajaj electronics',
+    'vivek limited',
+    'lulu hypermarket'
+  ];
+  var MDOA_HOLIDAYS = [
+    [1,1],[15,1],[26,1],[19,3],[1,5],
+    [14,9],[2,10],[21,10],[10,11],[25,12]
+  ];
+  function mdoaIsHoliday(d){
+    return MDOA_HOLIDAYS.some(function(h){ return d.getDate()===h[0] && d.getMonth()+1===h[1]; });
+  }
+  function mdoaIsWeekend(d){ var day=d.getDay(); return day===0||day===6; }
+  function mdoaIsWorking(d){ return !mdoaIsWeekend(d) && !mdoaIsHoliday(d); }
+  function mdoaWorkingDays(start,end){
+    var count=0, cur=new Date(start);
+    cur.setDate(cur.getDate()+1);
+    var endD=new Date(end);
+    while(cur<=endD){ if(mdoaIsWorking(cur)) count++; cur.setDate(cur.getDate()+1); }
+    return count;
+  }
+  function mdoaIsLFR(name){
+    var n=name.toLowerCase();
+    return LFR_KEYWORDS.some(function(k){ return n.indexOf(k)>-1; });
+  }
+  function calculateMDOA(){
+    var sv=document.getElementById('mdoaStart').value;
+    var ev=document.getElementById('mdoaEnd').value;
+    var pv=document.getElementById('mdoaPartner').value.trim();
+    var res=document.getElementById('mdoaResult');
+    if(!sv||!ev||!pv){
+      res.style.display='block'; res.className='mdoa-error';
+      res.innerHTML='&#9888; Please fill in all three fields.'; return;
+    }
+    var start=new Date(sv), end=new Date(ev);
+    if(end<start){
+      res.style.display='block'; res.className='mdoa-error';
+      res.innerHTML='&#9888; Entered date is older than the invoice date.'; return;
+    }
+    var days=mdoaWorkingDays(start,end);
+    var isLFR=mdoaIsLFR(pv);
+    var type=isLFR?'LFR':'Non-LFR';
+    var limit=isLFR?15:7;
+    var ok=days<=limit;
+    var label=ok?('Its Within '+limit+' day'):('Its Not Within '+limit+' day');
+    var col=ok?'#22c55e':'#ef4444';
+    var bg=ok?'rgba(34,197,94,0.1)':'rgba(239,68,68,0.1)';
+    var brd=ok?'rgba(34,197,94,0.3)':'rgba(239,68,68,0.3)';
+    res.style.display='block';
+    res.className='mdoa-result';
+    res.style.background=bg; res.style.border='1px solid '+brd;
+    res.innerHTML=
+      '<div class="mdoa-result-label">MDOA Result</div>'
+      +'<div class="mdoa-result-grid">'
+      +'<div class="mdoa-result-cell"><small>Type</small><strong>'+type+'</strong></div>'
+      +'<div class="mdoa-result-cell"><small>Working Days</small><strong>'+days+' days</strong></div>'
+      +'<div class="mdoa-result-cell highlight"><small>Result</small>'
+      +'<strong style="color:'+col+';">'+label+'</strong></div>'
+      +'</div>';
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll('.doc-pill[data-href]').forEach(pill => {
     pill.addEventListener('click', () => {

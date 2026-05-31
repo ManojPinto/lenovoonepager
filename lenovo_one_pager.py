@@ -946,6 +946,46 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       color: #999;
     }
 
+    /* ANNOUNCEMENT BANNERS */
+    .banner-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 14px 36px;
+      background: rgba(0,0,0,0.25);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
+    }
+    .banner-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .banner-card:hover {
+      background: rgba(229,0,0,0.1);
+      border-color: rgba(229,0,0,0.4);
+    }
+    .banner-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .banner-tag {
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #e50000;
+      margin-bottom: 4px;
+    }
+    .banner-text {
+      font-size: 0.84rem;
+      color: #ccc;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
     /* MAIN WRAPPER */
     .main-wrapper {
       display: flex;
@@ -1270,6 +1310,35 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <div class="page-heading">
   <h1>Lenovo One Pager</h1>
   <p>Introduced by the IN CEC Training Team</p>
+</div>
+
+<!-- ANNOUNCEMENT BANNERS -->
+<div class="banner-strip">
+
+  <div class="banner-card">
+    <div class="banner-icon">📢</div>
+    <div>
+      <div class="banner-tag">Latest Update</div>
+      <div class="banner-text">Banner 1 — Content coming soon</div>
+    </div>
+  </div>
+
+  <div class="banner-card">
+    <div class="banner-icon">🔔</div>
+    <div>
+      <div class="banner-tag">Notice</div>
+      <div class="banner-text">Banner 2 — Content coming soon</div>
+    </div>
+  </div>
+
+  <div class="banner-card">
+    <div class="banner-icon">⭐</div>
+    <div>
+      <div class="banner-tag">Info</div>
+      <div class="banner-text">Banner 3 — Content coming soon</div>
+    </div>
+  </div>
+
 </div>
 
 <!-- MAIN: SIDEBAR + CONTENT -->

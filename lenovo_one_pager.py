@@ -1604,7 +1604,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         <!-- LEFT: Form -->
         <div class="mdoa-form" style="flex:0 0 340px;">
           <div class="mdoa-hint">
-            <b>How to Use:</b> Select the Invoice Date and Case Created Date, then choose whether the partner is LFR or Non-LFR.
+            <b>How to Use:</b> Select the Invoice Date and Case Created Date, then choose whether the partner is LFR or Non-LFR. <b>Note:</b> This functionality currently supports data for 2026 only.
           </div>
           <div class="mdoa-field">
             <label>Invoice Date <span>*</span></label>

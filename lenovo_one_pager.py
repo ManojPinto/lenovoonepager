@@ -1813,11 +1813,6 @@ st.set_page_config(
 st.markdown("""
 <style>
     #MainMenu, header, footer               { display: none !important; height: 0 !important; }
-    footer                                  { display: none !important; visibility: hidden !important; height: 0 !important; }
-    [data-testid="stFooter"]               { display: none !important; }
-    .stFooter                               { display: none !important; }
-    section footer                          { display: none !important; }
-    .css-164nlkn, .css-1y4p8pa             { display: none !important; }
     [data-testid="stHeader"]               { display: none !important; height: 0 !important; }
     [data-testid="stAppViewContainer"]     { padding-top: 0 !important; }
     section[data-testid="stMain"]          { padding-top: 0 !important; }

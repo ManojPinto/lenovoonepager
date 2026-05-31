@@ -1314,10 +1314,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   </div>
 
   <div class="banner-card">
-    <div class="banner-icon">🔔</div>
-    <div>
-      <div class="banner-tag">Notice</div>
-      <div class="banner-text">Banner 2 — Content coming soon</div>
+    <<img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
+         alt="AI Talent Spotlight"
+         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
     </div>
   </div>
 

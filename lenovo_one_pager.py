@@ -943,45 +943,49 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       color: #999;
     }
 
-    /* ANNOUNCEMENT BANNERS */
-    .banner-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      padding: 14px 36px;
-      background: rgba(0,0,0,0.25);
+    /* BANNER CAROUSEL */
+    .banner-carousel {
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #000;
       border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .banner-track {
+      display: flex;
+      width: 300%;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .banner-slide {
+      width: 33.333%;
       flex-shrink: 0;
     }
-    .banner-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 10px;
-      padding: 14px 18px;
+    .banner-slide img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .banner-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      align-items: flex-start;
-      gap: 13px;
-      min-height: 110px;
-      transition: background 0.2s, border-color 0.2s;
+      gap: 7px;
+      z-index: 10;
     }
-    .banner-card:hover {
-      background: rgba(229,0,0,0.1);
-      border-color: rgba(229,0,0,0.4);
+    .banner-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
     }
-    .banner-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-    .banner-tag {
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #e50000;
-      margin-bottom: 4px;
-    }
-    .banner-text {
-      font-size: 0.84rem;
-      color: #ccc;
-      font-weight: 500;
-      line-height: 1.45;
+    .banner-dot.active {
+      background: #e50000;
+      transform: scale(1.3);
     }
 
     /* MAIN WRAPPER */
@@ -1304,27 +1308,24 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BANNERS -->
-<div class="banner-strip">
-
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png"
-         alt="AI Talent Spotlight"
-         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
+<!-- BANNER CAROUSEL -->
+<div class="banner-carousel">
+  <div class="banner-track" id="bannerTrack">
+    <div class="banner-slide">
+      <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png" alt="Banner 1" />
+    </div>
+    <div class="banner-slide">
+      <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png" alt="Banner 2" />
+    </div>
+    <div class="banner-slide">
+      <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png" alt="Banner 3" />
+    </div>
   </div>
-
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
-         alt="Banner 2"
-         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
+  <div class="banner-dots">
+    <div class="banner-dot active" onclick="goToSlide(0)"></div>
+    <div class="banner-dot"        onclick="goToSlide(1)"></div>
+    <div class="banner-dot"        onclick="goToSlide(2)"></div>
   </div>
-
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;background:#000;display:flex;align-items:center;justify-content:center;">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png"
-         alt="Banner 3"
-         style="width:100%;height:auto;object-fit:contain;border-radius:10px;display:block;" />
-  </div>
-
 </div>
 
 <!-- MAIN: SIDEBAR + CONTENT -->
@@ -1560,6 +1561,23 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 <script>
   let currentPanelId = 'lenovo-urls';
+
+  // ── Banner Carousel ──────────────────────────────────────────────────────
+  let currentSlide = 0;
+  const totalSlides = 3;
+  const track = document.getElementById('bannerTrack');
+  const dots  = document.querySelectorAll('.banner-dot');
+
+  function goToSlide(n) {
+    currentSlide = n;
+    track.style.transform = 'translateX(-' + (100 / totalSlides * n) + '%)';
+    dots.forEach((d, i) => d.classList.toggle('active', i === n));
+  }
+
+  setInterval(() => {
+    goToSlide((currentSlide + 1) % totalSlides);
+  }, 3000);
+  // ─────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {

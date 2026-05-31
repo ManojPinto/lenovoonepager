@@ -1806,7 +1806,7 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
 
     with mid:
         st.markdown("""
-        <div style="height:60px"></div>
+        <div style="height:160px"></div>
         <div style="text-align:center;">
             <h1 style="font-size:1.7rem;font-weight:900;letter-spacing:3px;
                        text-transform:uppercase;color:#fff;

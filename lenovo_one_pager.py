@@ -944,14 +944,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
 
     /* ANNOUNCEMENT BANNERS */
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-60px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-    .banner-card { animation: slideInLeft 0.6s ease forwards; opacity: 0; }
-    .banner-card:nth-child(1) { animation-delay: 0.0s; }
-    .banner-card:nth-child(2) { animation-delay: 0.2s; }
-    .banner-card:nth-child(3) { animation-delay: 0.4s; }
+    .banner-card { overflow: hidden; }
 
     .banner-strip {
       display: grid;
@@ -1623,6 +1616,45 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     document.getElementById('viewer-frame').src = '';
     if (restorePanel) document.getElementById(currentPanelId).classList.add('active');
   }
+
+  // ── Banner rotation: images cycle left every 3 s (cards stay in place) ──
+  (function() {
+    const URLS = [
+      'https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png',
+      'https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png',
+      'https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png'
+    ];
+    let offset = 0;
+
+    function rotateBanners() {
+      const imgs = document.querySelectorAll('.banner-card img');
+      offset = (offset + 1) % 3;
+
+      imgs.forEach(function(img, i) {
+        var nextSrc = URLS[(i + offset) % 3];
+
+        // Slide current image out to the left
+        img.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        img.style.transform  = 'translateX(-110%)';
+        img.style.opacity    = '0';
+
+        setTimeout(function() {
+          img.src = nextSrc;
+          img.style.transition = 'none';
+          img.style.transform  = 'translateX(110%)';  // appear from right
+          img.style.opacity    = '0';
+          img.getBoundingClientRect();               // force reflow
+
+          img.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+          img.style.transform  = 'translateX(0)';
+          img.style.opacity    = '1';
+        }, 520);
+      });
+    }
+
+    setInterval(rotateBanners, 3000);
+  })();
+  // ─────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll('.doc-pill[data-href]').forEach(pill => {
     pill.addEventListener('click', () => {

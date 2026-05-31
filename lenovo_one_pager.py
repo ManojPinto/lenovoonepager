@@ -1676,7 +1676,11 @@ st.markdown("""
     [data-testid="stDecoration"]            { display: none !important; }
     [data-testid="stStatusWidget"]          { display: none !important; }
     [data-testid="stSidebar"]               { display: none !important; }
-    iframe                                  { border: none !important; display: block; }
+    iframe                                  { border: none !important; display: block; margin: 0 !important; padding: 0 !important; }
+    [data-testid="stVerticalBlock"]         { gap: 0 !important; }
+    [data-testid="stVerticalBlock"] > div   { margin: 0 !important; padding: 0 !important; }
+    [data-testid="stMainBlockContainer"]    { gap: 0 !important; padding: 0 !important; }
+    [data-testid="stHorizontalBlock"]       { gap: 0 !important; margin-bottom: 0 !important; }
 
     /* Login page styles */
     .login-wrapper {

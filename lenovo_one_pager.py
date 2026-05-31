@@ -911,8 +911,8 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     html, body {
       height: 100%;
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: #e5e5e5;
-      color: #000000;
+      background: #13131f;
+      color: #fff;
     }
 
     body {
@@ -1660,7 +1660,9 @@ st.markdown("""
 <style>
     #MainMenu, header, footer               { display: none !important; height: 0 !important; }
     [data-testid="stHeader"]               { display: none !important; height: 0 !important; }
-    .stAppHeader                           { display: none !important; height: 0 !important; }
+    [data-testid="stAppViewContainer"]     { padding-top: 0 !important; }
+    section[data-testid="stMain"]          { padding-top: 0 !important; }
+    .stAppHeader, .st-emotion-cache-uf99v8 { display: none !important; height: 0 !important; }
     .stApp                                  { margin: 0 !important; padding: 0 !important;
                                             background:
                                               radial-gradient(circle at 15% 45%, rgba(160,18,18,0.75) 0%, transparent 45%),
@@ -1822,9 +1824,25 @@ st.markdown("""
   [data-testid="stHorizontalBlock"]:first-of-type {
     background: linear-gradient(135deg, #0a0a23 0%, #1a1a4e 55%, #2d0036 100%);
     border-bottom: 3px solid #e50000;
-    padding: 6px 24px !important;
+    padding: 4px 24px !important;
     margin: 0 !important;
     align-items: center !important;
+  }
+  /* Small logout button */
+  [data-testid="stHorizontalBlock"]:first-of-type button {
+    padding: 4px 14px !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    height: auto !important;
+    min-height: unset !important;
+    border-radius: 6px !important;
+    background: rgba(255,255,255,0.12) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+  }
+  [data-testid="stHorizontalBlock"]:first-of-type button:hover {
+    background: #e50000 !important;
+    border-color: #e50000 !important;
   }
 </style>
 """, unsafe_allow_html=True)

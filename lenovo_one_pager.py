@@ -1483,52 +1483,22 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <!-- PROCESS DOCUMENTS -->
     <div class="panel" id="process-docs">
       <div class="panel-title">&#128193; Process Documents</div>
-      <div class="doc-grid">
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:t:/g/personal/mpintoo_lenovo_com/IQB_yvlRXUWDSI6_9Ugrwd7qAbVIkFNE9jSQ6bYxopHLKGw?e=b7VEpb" data-type="word" data-name="Case Template">
-          <span class="pill-icon">&#128221;</span>Case Template
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:b:/g/personal/mpintoo_lenovo_com/IQAalfwa-QbxTo6BTUw-GlwZAfutGFAdPRazc34PFKbI3yA?e=4d9mQB" data-type="pdf" data-name="CEC Call Logging Process">
-          <span class="pill-icon">&#128196;</span>CEC Call Logging Process
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQAWtzQPy-V9T4sHaR0tpv-mAbF7jQcoq9TYk6PcKuV8IXs?e=IQJegN" data-type="excel" data-name="Remote &amp; Rescue Guide">
-          <span class="pill-icon">&#128202;</span>Remote &amp; Rescue Guide
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:t:/g/personal/mpintoo_lenovo_com/IQD2ujAlc69HTbc-c_GfVbSfAa1a0V8HBDNi_w44fPGyqPQ?e=yGQPGK" data-type="word" data-name="Service Delivery Instruction">
-          <span class="pill-icon">&#128221;</span>Service Delivery Instruction
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQCQKdSxst1RQpI12zczcoSTAaAScDRX7OZl8Pi-44DFHN0?e=fNyvCv" data-type="excel" data-name="RRR Selection Guide in WO">
-          <span class="pill-icon">&#128202;</span>RRR Selection Guide in WO
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQDXlepyUdUnQ44nI2Ae4mX8AXVRNA6jSjxU2lBLOAGEMq4?e=9IqHR9" data-type="excel" data-name="Windows Reset &amp; OSRI Guide">
-          <span class="pill-icon">&#128202;</span>Windows Reset &amp; OSRI Guide
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:t:/g/personal/mpintoo_lenovo_com/IQDhJdns8NWLRpHNASUyb-TrAZp-S6o2BiWJkAvespudg-g?e=db5mDu" data-type="word" data-name="Shipping Instructions">
-          <span class="pill-icon">&#128221;</span>Shipping Instructions
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQCT406A9M6zRo-rvQfUfCd0AY4wnYYaxrS0IshO2rGPdp4?e=xO0oyt" data-type="excel" data-name="HCS Code">
-          <span class="pill-icon">&#128202;</span>HCS Code
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:f:/g/personal/mpintoo_lenovo_com/IgBYdvNPCnMNQ5001O6T1AyLAbgJOU9KpMaEYKlzAIsqPjY?e=LdnUL2" data-type="link" data-name="Consumer Accessory Details">
-          <span class="pill-icon">&#128193;</span>Consumer Accessory Details
-        </span>
-        <span class="doc-pill" data-href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQCbBdj6ADpoSJdbJzYzw102AcJJmV5WPDwH825TGA3ioHk?e=4qOToW" data-type="excel" data-name="LFR &amp; LES Partner List">
-          <span class="pill-icon">&#128202;</span>LFR &amp; LES Partner List
-        </span>
-        <span class="doc-pill" data-href="https://support.lenovo.com/in/en/solutions/ht035306-lcd-display-pixel-policy-idealenovo-laptops-and-tablets" data-type="link" data-name="Dead Pixel Policy">
-          <span class="pill-icon">&#128279;</span>Dead Pixel Policy
-        </span>
-        <span class="doc-pill" data-href="https://download.lenovo.com/lenovo/lsw/adp_sa_en_in_think.pdf" data-type="pdf" data-name="ADP Terms (Commercial)">
-          <span class="pill-icon">&#128196;</span>ADP Terms (Commercial)
-        </span>
-        <span class="doc-pill" data-href="https://download.lenovo.com/lenovo/lsw/adp_sa_en_in_idea.pdf" data-type="pdf" data-name="ADP Terms (Consumer)">
-          <span class="pill-icon">&#128196;</span>ADP Terms (Consumer)
-        </span>
-        <span class="doc-pill" data-href="https://download.lenovo.com/pccbbs/thinkcentre_pdf/l505-0010-03_en_update.pdf" data-type="pdf" data-name="Lenovo Limited Warranty Terms">
-          <span class="pill-icon">&#128196;</span>Lenovo Limited Warranty Terms
-        </span>
-        <span class="doc-pill" data-href="https://support.lenovo.com/kn/en/solutions/ht505335" data-type="link" data-name="IWS Terms">
-          <span class="pill-icon">&#128279;</span>IWS Terms
-        </span>
+      <div class="link-grid">
+        <a class="link-card" href="https://download.lenovo.com/lenovo/lsw/adp_sa_en_in_think.pdf" target="_blank"><span class="dot"></span>ADP Terms (Commercial)</a>
+        <a class="link-card" href="https://download.lenovo.com/lenovo/lsw/adp_sa_en_in_idea.pdf" target="_blank"><span class="dot"></span>ADP Terms (Consumer)</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:t:/g/personal/mpintoo_lenovo_com/IQB_yvlRXUWDSI6_9Ugrwd7qAbVIkFNE9jSQ6bYxopHLKGw?e=b7VEpb" target="_blank"><span class="dot"></span>Case Template</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:b:/g/personal/mpintoo_lenovo_com/IQAalfwa-QbxTo6BTUw-GlwZAfutGFAdPRazc34PFKbI3yA?e=4d9mQB" target="_blank"><span class="dot"></span>CEC Call Logging Process</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:f:/g/personal/mpintoo_lenovo_com/IgBYdvNPCnMNQ5001O6T1AyLAbgJOU9KpMaEYKlzAIsqPjY?e=LdnUL2" target="_blank"><span class="dot"></span>Consumer Accessory Details</a>
+        <a class="link-card" href="https://support.lenovo.com/in/en/solutions/ht035306-lcd-display-pixel-policy-idealenovo-laptops-and-tablets" target="_blank"><span class="dot"></span>Dead Pixel Policy</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQCT406A9M6zRo-rvQfUfCd0AY4wnYYaxrS0IshO2rGPdp4?e=xO0oyt" target="_blank"><span class="dot"></span>HCS Code</a>
+        <a class="link-card" href="https://support.lenovo.com/kn/en/solutions/ht505335" target="_blank"><span class="dot"></span>IWS Terms</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQCbBdj6ADpoSJdbJzYzw102AcJJmV5WPDwH825TGA3ioHk?e=4qOToW" target="_blank"><span class="dot"></span>LFR &amp; LES Partner List</a>
+        <a class="link-card" href="https://download.lenovo.com/pccbbs/thinkcentre_pdf/l505-0010-03_en_update.pdf" target="_blank"><span class="dot"></span>Lenovo Limited Warranty Terms</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQAWtzQPy-V9T4sHaR0tpv-mAbF7jQcoq9TYk6PcKuV8IXs?e=IQJegN" target="_blank"><span class="dot"></span>Remote &amp; Rescue Guide</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQCQKdSxst1RQpI12zczcoSTAaAScDRX7OZl8Pi-44DFHN0?e=fNyvCv" target="_blank"><span class="dot"></span>RRR Selection Guide in WO</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:t:/g/personal/mpintoo_lenovo_com/IQD2ujAlc69HTbc-c_GfVbSfAa1a0V8HBDNi_w44fPGyqPQ?e=yGQPGK" target="_blank"><span class="dot"></span>Service Delivery Instruction</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:t:/g/personal/mpintoo_lenovo_com/IQDhJdns8NWLRpHNASUyb-TrAZp-S6o2BiWJkAvespudg-g?e=db5mDu" target="_blank"><span class="dot"></span>Shipping Instructions</a>
+        <a class="link-card" href="https://lenovoind-my.sharepoint.com/:x:/g/personal/mpintoo_lenovo_com/IQDXlepyUdUnQ44nI2Ae4mX8AXVRNA6jSjxU2lBLOAGEMq4?e=9IqHR9" target="_blank"><span class="dot"></span>Windows Reset &amp; OSRI Guide</a>
       </div>
     </div>
 

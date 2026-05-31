@@ -1803,7 +1803,7 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
                         font-size:0.7rem;font-weight:700;letter-spacing:1.5px;
                         text-transform:uppercase;padding:4px 14px;
                         border-radius:20px;margin-bottom:18px;">
-                IT Helpdesk Portal
+                Introduced by India CEC Training Team
             </div>
             <h1 style="font-size:1.7rem;font-weight:900;letter-spacing:3px;
                        text-transform:uppercase;color:#fff;

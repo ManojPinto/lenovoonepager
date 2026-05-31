@@ -1827,6 +1827,11 @@ st.markdown("""
                                               linear-gradient(135deg, #5c0808 0%, #4a0a6e 48%, #0d0b3e 100%) !important; }
     .block-container                        { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
     [data-testid="stToolbar"]               { display: none !important; }
+    [data-testid="stBottom"]                { display: none !important; }
+    [data-testid="stBottomBlockContainer"]  { display: none !important; }
+    [data-testid="stToolbarActions"]        { display: none !important; }
+    .stBottom                               { display: none !important; }
+    .stBottomBlockContainer                 { display: none !important; }
     [data-testid="stDecoration"]            { display: none !important; }
     [data-testid="stStatusWidget"]          { display: none !important; }
     [data-testid="stToolbarActions"]        { display: none !important; }
@@ -1937,6 +1942,20 @@ st.markdown("""
     });
     var bottom=document.querySelector('[data-testid=stBottom]');
     if(bottom) bottom.style.setProperty('display','none','important');
+    var bottom2=document.querySelector('[data-testid=stBottomBlockContainer]');
+    if(bottom2) bottom2.style.setProperty('display','none','important');
+    // Hide bottom-right fixed/absolute branding buttons
+    document.querySelectorAll('button,a,div').forEach(function(el){
+      try{
+        var s=window.getComputedStyle(el);
+        var r=el.getBoundingClientRect();
+        if((s.position==='fixed'||s.position==='absolute')
+           && r.bottom>window.innerHeight-120 && r.right>window.innerWidth-120
+           && r.width<120 && r.height<120){
+          el.style.setProperty('display','none','important');
+        }
+      }catch(e){}
+    });
   }
   hide();
   setInterval(hide,800);

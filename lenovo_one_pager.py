@@ -961,6 +961,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       display: flex;
       align-items: flex-start;
       gap: 13px;
+      min-height: 110px;
       transition: background 0.2s, border-color 0.2s;
     }
     .banner-card:hover {
@@ -1306,12 +1307,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <!-- ANNOUNCEMENT BANNERS -->
 <div class="banner-strip">
 
-  <div class="banner-card">
-    <div class="banner-icon">📢</div>
-    <div>
-      <div class="banner-tag">Latest Update</div>
-      <div class="banner-text">Banner 1 — Content coming soon</div>
-    </div>
+  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png"
+         alt="AI Talent Spotlight"
+         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
   <div class="banner-card">

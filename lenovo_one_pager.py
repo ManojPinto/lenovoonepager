@@ -1670,6 +1670,14 @@ st.markdown("""
     [data-testid="stToolbar"]               { display: none !important; }
     [data-testid="stDecoration"]            { display: none !important; }
     [data-testid="stStatusWidget"]          { display: none !important; }
+    [data-testid="stToolbarActions"]        { display: none !important; }
+    [data-testid="stAppToolbar"]            { display: none !important; }
+    .stDeployButton                         { display: none !important; }
+    .viewerBadge_container__r5tak          { display: none !important; }
+    #stDecoration                           { display: none !important; }
+    .st-emotion-cache-h4xjcd               { display: none !important; }
+    button[title="Manage app"]              { display: none !important; }
+    button[aria-label="Manage app"]         { display: none !important; }
     [data-testid="stSidebar"]               { display: none !important; }
     iframe                                  { border: none !important; display: block; margin: 0 !important; padding: 0 !important; }
     [data-testid="stVerticalBlock"]         { gap: 0 !important; }

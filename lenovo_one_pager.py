@@ -39,6 +39,7 @@ ALLOWED_USERS = {
     'achapparband@lenovo.com': 'Akil Kadarali Chapparband',
     'achoubey2@lenovo.com': 'Arshit Choubey',
     'acv@lenovo.com': 'Andrew William C V',
+    'vraj@lenovo.com': 'Vinil Raj',
     'ad1@lenovo.com': 'Akshay Kumar D',
     'adas8@lenovo.com': 'Ayan Das',
     'adas9@lenovo.com': 'Adyasha Das',

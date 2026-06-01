@@ -1727,14 +1727,14 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
           <!-- Monthly -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;">
-            <div style="font-size:0.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">&#128197; Monthly Logins</div>
-            <div id="an-monthly" style="display:flex;align-items:flex-end;gap:8px;height:140px;"></div>
+            <div style="font-size:0.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">&#128197; Monthly Logins</div>
+            <div id="an-monthly" style="width:100%;"></div>
           </div>
 
           <!-- Daily -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;">
-            <div style="font-size:0.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">&#128198; Daily Logins (last 14 days)</div>
-            <div id="an-daily" style="display:flex;align-items:flex-end;gap:6px;height:140px;"></div>
+            <div style="font-size:0.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">&#128198; Daily Logins (last 14 days)</div>
+            <div id="an-daily" style="width:100%;"></div>
           </div>
 
         </div>
@@ -1915,23 +1915,59 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
   }
 
-  function renderBarChart(containerId, data, color) {
+  function renderLineChart(containerId, data, color) {
     var container = document.getElementById(containerId);
     if (!container) return;
     var keys = Object.keys(data);
-    if (!keys.length) { container.innerHTML = '<div style="color:#555;font-size:0.8rem;padding:10px;">No data yet.</div>'; return; }
-    var maxVal = Math.max.apply(null, keys.map(function(k){ return data[k]; })) || 1;
-    var html = '';
-    keys.forEach(function(k) {
-      var pct = Math.max(4, Math.round((data[k] / maxVal) * 120));
-      html +=
-        '<div style="display:flex;flex-direction:column;align-items:center;flex:1;min-width:28px;">' +
-          '<div style="color:#ccc;font-size:0.7rem;margin-bottom:3px;">' + data[k] + '</div>' +
-          '<div style="background:' + color + ';width:100%;height:' + pct + 'px;border-radius:4px 4px 0 0;min-height:4px;"></div>' +
-          '<div style="color:#777;font-size:0.62rem;margin-top:5px;text-align:center;writing-mode:vertical-rl;transform:rotate(180deg);max-height:52px;overflow:hidden;">' + k + '</div>' +
-        '</div>';
+    if (!keys.length) {
+      container.innerHTML = '<div style="color:#555;font-size:0.8rem;padding:10px;">No data yet.</div>';
+      return;
+    }
+    var values = keys.map(function(k){ return data[k]; });
+    var maxVal = Math.max.apply(null, values) || 1;
+    var W=480, H=150, pL=36, pR=16, pT=22, pB=38;
+    var cW = W-pL-pR, cH = H-pT-pB, n = keys.length;
+
+    function px(i){ return pL + (n===1 ? cW/2 : (i/(n-1))*cW); }
+    function py(v){ return pT + cH - (v/maxVal)*cH; }
+
+    var svg = '<svg width="100%" viewBox="0 0 '+W+' '+H+'" style="overflow:visible;">';
+
+    // Grid lines
+    [0,0.25,0.5,0.75,1].forEach(function(f){
+      var gy = pT + f*cH;
+      svg += '<line x1="'+pL+'" y1="'+gy+'" x2="'+(W-pR)+'" y2="'+gy+'" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>';
+      svg += '<text x="'+(pL-5)+'" y="'+(gy+3.5)+'" text-anchor="end" fill="#555" font-size="9">'+Math.round(maxVal*(1-f))+'</text>';
     });
-    container.innerHTML = html;
+
+    // Area
+    var area = 'M '+px(0)+' '+py(values[0]);
+    for(var i=1;i<n;i++) area += ' L '+px(i)+' '+py(values[i]);
+    area += ' L '+px(n-1)+' '+(pT+cH)+' L '+px(0)+' '+(pT+cH)+' Z';
+    svg += '<defs><linearGradient id="lg_'+containerId+'" x1="0" y1="0" x2="0" y2="1">'
+         + '<stop offset="0%" stop-color="'+color+'" stop-opacity="0.35"/>'
+         + '<stop offset="100%" stop-color="'+color+'" stop-opacity="0.02"/>'
+         + '</linearGradient></defs>';
+    svg += '<path d="'+area+'" fill="url(#lg_'+containerId+')" />';
+
+    // Line
+    var line = 'M '+px(0)+' '+py(values[0]);
+    for(var j=1;j<n;j++) line += ' L '+px(j)+' '+py(values[j]);
+    svg += '<path d="'+line+'" fill="none" stroke="'+color+'" stroke-width="2.2" stroke-linejoin="round"/>';
+
+    // Dots + labels
+    for(var k=0;k<n;k++){
+      var cx=px(k), cy=py(values[k]);
+      svg += '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="'+color+'" stroke="#13131f" stroke-width="2"/>';
+      svg += '<text x="'+cx+'" y="'+(cy-9)+'" text-anchor="middle" fill="#ddd" font-size="10" font-weight="700">'+values[k]+'</text>';
+      svg += '<text x="'+cx+'" y="'+(pT+cH+13)+'" text-anchor="middle" fill="#666" font-size="9">'+keys[k]+'</text>';
+    }
+
+    // Axes
+    svg += '<line x1="'+pL+'" y1="'+pT+'" x2="'+pL+'" y2="'+(pT+cH)+'" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+    svg += '<line x1="'+pL+'" y1="'+(pT+cH)+'" x2="'+(W-pR)+'" y2="'+(pT+cH)+'" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>';
+    svg += '</svg>';
+    container.innerHTML = svg;
   }
 
   function renderAnalytics() {
@@ -1952,7 +1988,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         monthly[key] = (monthly[key] || 0) + 1;
       }
     });
-    renderBarChart('an-monthly', monthly, '#e50000');
+    renderLineChart('an-monthly', monthly, '#e50000');
 
     // ── Daily aggregation (last 14 days) ─────────────────────────────────
     var daily = {};
@@ -1967,7 +2003,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     var dayKeys = Object.keys(daily);
     var last14 = {};
     dayKeys.slice(-14).forEach(function(k){ last14[k] = daily[k]; });
-    renderBarChart('an-daily', last14, '#3b82f6');
+    renderLineChart('an-daily', last14, '#3b82f6');
 
     // ── Login history table ───────────────────────────────────────────────
     var tbody = document.getElementById('an-tbody');

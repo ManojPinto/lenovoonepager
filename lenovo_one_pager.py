@@ -1450,6 +1450,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <div class="nav-item" data-target="feedback">
       <span class="nav-icon">&#128172;</span> Help Us Improve
     </div>
+    <div class="nav-item" data-target="analytics">
+      <span class="nav-icon">&#128202;</span> Analytics
+    </div>
   </nav>
 
   <!-- CONTENT PANEL -->
@@ -1679,6 +1682,61 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- ANALYTICS -->
+    <div class="panel" id="analytics">
+      <div class="panel-title">&#128202; Analytics</div>
+
+      <!-- LOCK SCREEN -->
+      <div id="an-lock">
+        <div class="mdoa-hint" style="max-width:380px;">
+          <b>Restricted:</b> Enter the admin passcode to view page analytics.
+        </div>
+        <div class="mdoa-field" style="max-width:280px;">
+          <label>Passcode <span style="color:#e50000;">*</span></label>
+          <input type="password" id="anCode" class="mdoa-input" placeholder="Enter passcode..." onkeydown="if(event.key==='Enter') unlockAnalytics()" />
+        </div>
+        <button class="mdoa-btn" onclick="unlockAnalytics()">&#128274; Unlock</button>
+        <div id="an-err" style="display:none;color:#ff8080;margin-top:12px;font-size:0.85rem;">&#9888; Incorrect passcode.</div>
+      </div>
+
+      <!-- ANALYTICS CONTENT (hidden until unlocked) -->
+      <div id="an-content" style="display:none;">
+
+        <!-- Metric cards -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;max-width:680px;">
+          <div style="background:rgba(229,0,0,0.1);border:1px solid rgba(229,0,0,0.25);border-radius:12px;padding:20px;">
+            <div style="font-size:0.68rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Total Logins</div>
+            <div id="an-total" style="font-size:2.2rem;font-weight:900;color:#fff;">0</div>
+          </div>
+          <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:20px;">
+            <div style="font-size:0.68rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Unique Users</div>
+            <div id="an-unique" style="font-size:2.2rem;font-weight:900;color:#fff;">0</div>
+          </div>
+          <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:20px;">
+            <div style="font-size:0.68rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Today&apos;s Logins</div>
+            <div id="an-today" style="font-size:2.2rem;font-weight:900;color:#fff;">0</div>
+          </div>
+        </div>
+
+        <!-- History table -->
+        <div style="font-size:0.78rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Login History</div>
+        <div style="overflow-y:auto;max-height:380px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+          <table style="width:100%;border-collapse:collapse;font-size:0.84rem;">
+            <thead>
+              <tr style="background:rgba(229,0,0,0.15);position:sticky;top:0;">
+                <th style="padding:10px 14px;text-align:left;color:#e50000;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;">#</th>
+                <th style="padding:10px 14px;text-align:left;color:#e50000;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;">Name</th>
+                <th style="padding:10px 14px;text-align:left;color:#e50000;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;">Email</th>
+                <th style="padding:10px 14px;text-align:left;color:#e50000;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;">Login Time</th>
+              </tr>
+            </thead>
+            <tbody id="an-tbody"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
   </div><!-- /content-panel -->
 </div><!-- /main-wrapper -->
 
@@ -1810,6 +1868,44 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       +'<div class="mdoa-result-cell highlight"><small>Result</small>'
       +'<strong style="color:'+col+';">'+label+'</strong></div>'
       +'</div>';
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── Analytics unlock ─────────────────────────────────────────────────────
+  var ANALYTICS_DATA = ___ANALYTICS_JSON___;
+
+  function unlockAnalytics() {
+    var code = document.getElementById('anCode').value.trim();
+    if (code === '88990') {
+      document.getElementById('an-lock').style.display    = 'none';
+      document.getElementById('an-content').style.display = 'block';
+      renderAnalytics();
+    } else {
+      document.getElementById('an-err').style.display = 'block';
+    }
+  }
+
+  function renderAnalytics() {
+    var d = ANALYTICS_DATA;
+    document.getElementById('an-total').textContent  = d.total  || 0;
+    document.getElementById('an-unique').textContent = d.unique || 0;
+    document.getElementById('an-today').textContent  = d.today  || 0;
+    var tbody = document.getElementById('an-tbody');
+    tbody.innerHTML = '';
+    var history = (d.history || []).slice().reverse();
+    history.forEach(function(row, i) {
+      var tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+      tr.innerHTML =
+        '<td style="padding:9px 14px;color:#666;">' + (i+1) + '</td>' +
+        '<td style="padding:9px 14px;color:#fff;font-weight:600;">' + (row.name||'') + '</td>' +
+        '<td style="padding:9px 14px;color:#aaa;">' + (row.email||'') + '</td>' +
+        '<td style="padding:9px 14px;color:#888;">' + (row.time||'') + '</td>';
+      tbody.appendChild(tr);
+    });
+    if (!history.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="padding:20px;text-align:center;color:#555;">No login history yet.</td></tr>';
+    }
   }
   // ─────────────────────────────────────────────────────────────────────────
 
@@ -2158,8 +2254,19 @@ if st.session_state.get("is_admin"):
 
 # ── Render the full HTML dashboard ──────────────────────────────────────────
 # height uses JS to detect viewport; fallback is 900px
+# Inject live analytics data into the HTML
+_s      = get_analytics()
+_today  = datetime.now().strftime("%d %b %Y")
+_an_json = json.dumps({
+    "total":   _s.get("total_logins", 0),
+    "unique":  len(_s.get("unique_users", [])),
+    "today":   sum(1 for h in _s.get("login_history",[]) if _today in h.get("time","")),
+    "history": _s.get("login_history", [])
+})
+_html = HTML_CONTENT.replace("___ANALYTICS_JSON___", _an_json)
+
 components.html(
-    HTML_CONTENT + """
+    _html + """
     <script>
       // Tell Streamlit iframe to resize to full window height
       function setHeight() {

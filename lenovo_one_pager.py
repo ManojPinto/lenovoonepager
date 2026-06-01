@@ -1362,19 +1362,19 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <div class="banner-strip">
 
   <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://raw.githubusercontent.com/ManojPinto/lenovoonepager/main/banner1.png"
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png"
          alt="AI Talent Spotlight"
          style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
   <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://raw.githubusercontent.com/ManojPinto/lenovoonepager/main/banner2.png"
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
          alt="Banner 2"
          style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
   <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;background:#000;display:flex;align-items:center;justify-content:center;">
-    <img src="https://raw.githubusercontent.com/ManojPinto/lenovoonepager/main/banner3.png"
+    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png"
          alt="Banner 3"
          style="width:100%;height:auto;object-fit:contain;border-radius:10px;display:block;" />
   </div>
@@ -1406,7 +1406,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       <span class="nav-icon">&#128268;</span> Power BI Links
     </div>
     <div class="nav-item" data-target="mdoa">
-      <span class="nav-icon">&#128203;</span> MDOA Criteria Check
+      <span class="nav-icon">&#128203;</span> MDOA Criteria Check *UNDER TESTING
     </div>
     <div class="nav-item" data-target="community">
       <span class="nav-icon">&#127760;</span> Our Community
@@ -1520,7 +1520,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             <li><strong>Sales</strong><span>1800-4199-733</span></li>
             <li><strong>Moto book</strong><span>18004196686</span></li>
             <li><strong>Fujitsu</strong><span>1800-891-2273</span></li>
-            <li><strong>Server</strong><span>+91 80 6884 6800</span></li>
+            <li><strong>Server</strong><span>1800 102 6666 / +918068846800</span></li>
           </ul>
         </div>
         <div class="phone-block">
@@ -1532,6 +1532,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
             <li><strong>Premier Support</strong><span>12419</span></li>
             <li><strong>MBG (Smartphone)</strong><span>13440</span></li>
             <li><strong>Tablet</strong><span>12429</span></li>
+            <li><strong>FS-Think</strong><span>12430</span></li>
+            <li><strong>FS-Idea</strong><span>12427</span></li>
+            <li><strong>FS-Premier</strong><span>12437</span></li>
             <li><strong>Workstation</strong><span>12415</span></li>
           </ul>
         </div>

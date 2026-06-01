@@ -14,6 +14,7 @@ import streamlit.components.v1 as components
 ALLOWED_USERS = {
     'aabdulrawoof@lenovo.com': 'Afridh Abdulrawoof',
     'aabhiram@lenovo.com': 'P Abhiram',
+    'smitra5@lenovo.com': 'Shreya Mitra',
     'aafrid@lenovo.com': 'A AFRID',
     'aahammed@lenovo.com': 'Aman Ahammed',
     'aahmed3@lenovo.com': 'Aqeeb Ahamed M B',

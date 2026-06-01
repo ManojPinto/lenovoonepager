@@ -47,6 +47,7 @@ ALLOWED_USERS = {
     'aabhiram@lenovo.com': 'P Abhiram',
     'smitra5@lenovo.com': 'Shreya Mitra',
     'aafrid@lenovo.com': 'A AFRID',
+    'mimran2@lenovo.com': 'Mohammed Imran',
     'gpaneer@lenovo.com': 'Gunasheelan Paneer',
     'dg6@lenovo.com': 'Divya G',
     'ipanda1@lenovo.com': 'Ishan Raj',

@@ -1722,6 +1722,23 @@ HTML_CONTENT = r"""<!DOCTYPE html>
           </div>
         </div>
 
+        <!-- Charts row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+
+          <!-- Monthly -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;">
+            <div style="font-size:0.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">&#128197; Monthly Logins</div>
+            <div id="an-monthly" style="display:flex;align-items:flex-end;gap:8px;height:140px;"></div>
+          </div>
+
+          <!-- Daily -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;">
+            <div style="font-size:0.72rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">&#128198; Daily Logins (last 14 days)</div>
+            <div id="an-daily" style="display:flex;align-items:flex-end;gap:6px;height:140px;"></div>
+          </div>
+
+        </div>
+
         <!-- History table -->
         <div style="font-size:0.78rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Login History</div>
         <div style="overflow-y:auto;max-height:380px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
@@ -1898,16 +1915,65 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
   }
 
+  function renderBarChart(containerId, data, color) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    var keys = Object.keys(data);
+    if (!keys.length) { container.innerHTML = '<div style="color:#555;font-size:0.8rem;padding:10px;">No data yet.</div>'; return; }
+    var maxVal = Math.max.apply(null, keys.map(function(k){ return data[k]; })) || 1;
+    var html = '';
+    keys.forEach(function(k) {
+      var pct = Math.max(4, Math.round((data[k] / maxVal) * 120));
+      html +=
+        '<div style="display:flex;flex-direction:column;align-items:center;flex:1;min-width:28px;">' +
+          '<div style="color:#ccc;font-size:0.7rem;margin-bottom:3px;">' + data[k] + '</div>' +
+          '<div style="background:' + color + ';width:100%;height:' + pct + 'px;border-radius:4px 4px 0 0;min-height:4px;"></div>' +
+          '<div style="color:#777;font-size:0.62rem;margin-top:5px;text-align:center;writing-mode:vertical-rl;transform:rotate(180deg);max-height:52px;overflow:hidden;">' + k + '</div>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+  }
+
   function renderAnalytics() {
     var d = ANALYTICS_DATA;
     document.getElementById('an-total').textContent  = d.total  || 0;
     document.getElementById('an-unique').textContent = d.unique || 0;
     document.getElementById('an-today').textContent  = d.today  || 0;
     document.getElementById('an-clicks').textContent = localStorage.getItem(CLICK_KEY) || 0;
+
+    var history = (d.history || []);
+
+    // ── Monthly aggregation ──────────────────────────────────────────────
+    var monthly = {};
+    history.forEach(function(h) {
+      var parts = (h.time || '').split(' ');
+      if (parts.length >= 3) {
+        var key = parts[1] + ' ' + parts[2]; // "Jun 2026"
+        monthly[key] = (monthly[key] || 0) + 1;
+      }
+    });
+    renderBarChart('an-monthly', monthly, '#e50000');
+
+    // ── Daily aggregation (last 14 days) ─────────────────────────────────
+    var daily = {};
+    history.forEach(function(h) {
+      var parts = (h.time || '').split(' ');
+      if (parts.length >= 3) {
+        var key = parts[0] + ' ' + parts[1]; // "01 Jun"
+        daily[key] = (daily[key] || 0) + 1;
+      }
+    });
+    // Keep only last 14 unique days
+    var dayKeys = Object.keys(daily);
+    var last14 = {};
+    dayKeys.slice(-14).forEach(function(k){ last14[k] = daily[k]; });
+    renderBarChart('an-daily', last14, '#3b82f6');
+
+    // ── Login history table ───────────────────────────────────────────────
     var tbody = document.getElementById('an-tbody');
     tbody.innerHTML = '';
-    var history = (d.history || []).slice().reverse();
-    history.forEach(function(row, i) {
+    var reversed = history.slice().reverse();
+    reversed.forEach(function(row, i) {
       var tr = document.createElement('tr');
       tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
       tr.innerHTML =
@@ -1917,7 +1983,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         '<td style="padding:9px 14px;color:#888;">' + (row.time||'') + '</td>';
       tbody.appendChild(tr);
     });
-    if (!history.length) {
+    if (!reversed.length) {
       tbody.innerHTML = '<tr><td colspan="4" style="padding:20px;text-align:center;color:#555;">No login history yet.</td></tr>';
     }
   }

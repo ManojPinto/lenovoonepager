@@ -1703,7 +1703,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       <div id="an-content" style="display:none;">
 
         <!-- Metric cards -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;max-width:680px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;">
           <div style="background:rgba(229,0,0,0.1);border:1px solid rgba(229,0,0,0.25);border-radius:12px;padding:20px;">
             <div style="font-size:0.68rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Total Logins</div>
             <div id="an-total" style="font-size:2.2rem;font-weight:900;color:#fff;">0</div>
@@ -1715,6 +1715,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
           <div style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);border-radius:12px;padding:20px;">
             <div style="font-size:0.68rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Today&apos;s Logins</div>
             <div id="an-today" style="font-size:2.2rem;font-weight:900;color:#fff;">0</div>
+          </div>
+          <div style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.25);border-radius:12px;padding:20px;">
+            <div style="font-size:0.68rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Page Clicks</div>
+            <div id="an-clicks" style="font-size:2.2rem;font-weight:900;color:#fff;">0</div>
           </div>
         </div>
 
@@ -1871,6 +1875,15 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   }
   // ─────────────────────────────────────────────────────────────────────────
 
+  // ── Click tracking (localStorage — persists across reloads) ─────────────
+  var CLICK_KEY = 'lop_total_clicks';
+  document.addEventListener('click', function(e) {
+    // Don't count clicks on the passcode unlock button itself
+    var cur = parseInt(localStorage.getItem(CLICK_KEY) || '0') + 1;
+    localStorage.setItem(CLICK_KEY, cur);
+  });
+  // ─────────────────────────────────────────────────────────────────────────
+
   // ── Analytics unlock ─────────────────────────────────────────────────────
   var ANALYTICS_DATA = ___ANALYTICS_JSON___;
 
@@ -1890,6 +1903,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     document.getElementById('an-total').textContent  = d.total  || 0;
     document.getElementById('an-unique').textContent = d.unique || 0;
     document.getElementById('an-today').textContent  = d.today  || 0;
+    document.getElementById('an-clicks').textContent = localStorage.getItem(CLICK_KEY) || 0;
     var tbody = document.getElementById('an-tbody');
     tbody.innerHTML = '';
     var history = (d.history || []).slice().reverse();

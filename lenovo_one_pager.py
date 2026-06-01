@@ -9,6 +9,37 @@ Usage:
 
 import streamlit as st
 import streamlit.components.v1 as components
+import json, os
+from datetime import datetime
+
+# ── Analytics store (persists across sessions within same deployment) ────────
+@st.cache_resource
+def get_analytics():
+    store = {"total_logins": 0, "unique_users": [], "login_history": []}
+    if os.path.exists("analytics.json"):
+        try:
+            with open("analytics.json") as f:
+                store.update(json.load(f))
+        except: pass
+    return store
+
+def save_analytics():
+    try:
+        with open("analytics.json", "w") as f:
+            json.dump(get_analytics(), f)
+    except: pass
+
+def track_login(email, name):
+    s = get_analytics()
+    s["total_logins"] = s.get("total_logins", 0) + 1
+    if email not in s.setdefault("unique_users", []):
+        s["unique_users"].append(email)
+    s.setdefault("login_history", []).append({
+        "name": name, "email": email,
+        "time": datetime.now().strftime("%d %b %Y  %H:%M")
+    })
+    s["login_history"] = s["login_history"][-2000:]
+    save_analytics()
 
 # ── Allowed users: email (lowercase) → display name ────────────────────────
 ALLOWED_USERS = {
@@ -1992,14 +2023,21 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
             submitted = st.form_submit_button("Continue →", use_container_width=True, type="primary")
 
         if submitted:
-            val = lenovo_id.strip().lower()
+            val = lenovo_id.strip()
             if not val:
                 st.error("Please enter your Lenovo ID to continue.")
-            elif val not in ALLOWED_USERS:
+            elif val == "88990":
+                # Admin / analytics access
+                st.session_state["lenovo_id"]   = "88990"
+                st.session_state["lenovo_name"] = "Admin"
+                st.session_state["is_admin"]    = True
+                st.rerun()
+            elif val.lower() not in ALLOWED_USERS:
                 st.error("Access denied — your email is not on the authorised list.")
             else:
-                st.session_state["lenovo_id"] = val
-                st.session_state["lenovo_name"] = ALLOWED_USERS[val]
+                st.session_state["lenovo_id"]   = val.lower()
+                st.session_state["lenovo_name"] = ALLOWED_USERS[val.lower()]
+                track_login(val.lower(), ALLOWED_USERS[val.lower()])
                 st.rerun()
 
 
@@ -2077,7 +2115,45 @@ with col_logout:
     if st.button("⏻", use_container_width=False, help="Logout"):
         st.session_state.pop("lenovo_id", None)
         st.session_state.pop("lenovo_name", None)
+        st.session_state.pop("is_admin", None)
         st.rerun()
+
+# ── Analytics dashboard (admin only) ────────────────────────────────────────
+if st.session_state.get("is_admin"):
+    s = get_analytics()
+    total    = s.get("total_logins", 0)
+    unique   = len(s.get("unique_users", []))
+    history  = list(reversed(s.get("login_history", [])))
+
+    st.markdown("""
+    <style>
+      .stApp { background: #0d0b1e !important; color: #fff; }
+      .block-container { padding: 2rem 3rem !important; }
+    </style>
+    <h2 style="color:#e50000;font-size:1.4rem;font-weight:900;letter-spacing:2px;
+               text-transform:uppercase;margin-bottom:24px;">
+      📊 Analytics Dashboard
+    </h2>
+    """, unsafe_allow_html=True)
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric("🔐 Total Logins",   total)
+    c2.metric("👤 Unique Users",   unique)
+    c3.metric("📋 History Records", len(history))
+
+    st.markdown("---")
+    st.markdown("### 🕐 Recent Login History")
+
+    if history:
+        import pandas as pd
+        df = pd.DataFrame(history, columns=["name","email","time"])
+        df.columns = ["Name", "Email", "Login Time"]
+        df.index = range(1, len(df)+1)
+        st.dataframe(df, use_container_width=True, height=500)
+    else:
+        st.info("No logins recorded yet.")
+
+    st.stop()
 
 # ── Render the full HTML dashboard ──────────────────────────────────────────
 # height uses JS to detect viewport; fallback is 900px

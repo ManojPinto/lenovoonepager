@@ -1362,19 +1362,19 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <div class="banner-strip">
 
   <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner1.png"
+    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner1.png"
          alt="AI Talent Spotlight"
          style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
   <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner2.png"
+    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner2.png"
          alt="Banner 2"
          style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
   </div>
 
   <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;background:#000;display:flex;align-items:center;justify-content:center;">
-    <img src="https://raw.githubusercontent.com/Manoj213333/lenovo-one-pager/main/banner3.png"
+    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png"
          alt="Banner 3"
          style="width:100%;height:auto;object-fit:contain;border-radius:10px;display:block;" />
   </div>
@@ -2092,4 +2092,5 @@ components.html(
     height=870,
     scrolling=False,
 )
+
 

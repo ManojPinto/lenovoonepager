@@ -983,10 +983,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       color: #999;
     }
 
-    /* ANNOUNCEMENT BANNERS */
+    /* ANNOUNCEMENT BANNERS — 4 across */
     .banner-strip {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       padding: 14px 36px;
       background: rgba(0,0,0,0.25);
@@ -994,35 +994,78 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       flex-shrink: 0;
     }
     .banner-card {
-      background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 13px;
-      min-height: 110px;
-      transition: background 0.2s, border-color 0.2s;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .banner-card:hover {
-      background: rgba(229,0,0,0.1);
-      border-color: rgba(229,0,0,0.4);
+      border-color: rgba(229,0,0,0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(229,0,0,0.22);
     }
-    .banner-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-    .banner-tag {
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #e50000;
-      margin-bottom: 4px;
+    .banner-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      display: block;
     }
-    .banner-text {
-      font-size: 0.84rem;
-      color: #ccc;
-      font-weight: 500;
-      line-height: 1.45;
+    /* Placeholder for an empty banner slot */
+    .banner-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 110px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 10px;
+      color: #555;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
+
+    /* LIGHTBOX (banner popup) */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 100000;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      cursor: zoom-out;
+      animation: lbFade 0.2s ease;
+    }
+    .lightbox-overlay.show { display: flex; }
+    @keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+    .lightbox-overlay img {
+      max-width: 92%;
+      max-height: 92%;
+      border-radius: 10px;
+      box-shadow: 0 10px 60px rgba(0,0,0,0.7);
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 22px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.4);
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: #e50000; border-color: #e50000; }
 
     /* MAIN WRAPPER */
     .main-wrapper {
@@ -1395,27 +1438,29 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BANNERS -->
+<!-- ANNOUNCEMENT BANNERS (click to enlarge) -->
 <div class="banner-strip">
 
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner1.png"
-         alt="AI Talent Spotlight"
-         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
+  <div class="banner-card" onclick="openLightbox('https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner1.png')">
+    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner1.png" alt="Banner 1" />
   </div>
 
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner2.png"
-         alt="Banner 2"
-         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
+  <div class="banner-card" onclick="openLightbox('https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner2.png')">
+    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner2.png" alt="Banner 2" />
   </div>
 
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;background:#000;display:flex;align-items:center;justify-content:center;">
-    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png"
-         alt="Banner 3"
-         style="width:100%;height:auto;object-fit:contain;border-radius:10px;display:block;" />
+  <div class="banner-card" onclick="openLightbox('https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png')">
+    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png" alt="Banner 3" />
   </div>
 
+  <div class="banner-placeholder">Banner 4 &mdash; coming soon</div>
+
+</div>
+
+<!-- LIGHTBOX POPUP -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
+  <img id="lightbox-img" src="" alt="Banner" onclick="event.stopPropagation()" />
 </div>
 
 <!-- MAIN: SIDEBAR + CONTENT -->
@@ -2024,6 +2069,19 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       tbody.innerHTML = '<tr><td colspan="4" style="padding:20px;text-align:center;color:#555;">No login history yet.</td></tr>';
     }
   }
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── Banner lightbox popup ─────────────────────────────────────────────────
+  function openLightbox(src) {
+    var lb  = document.getElementById('lightbox');
+    var img = document.getElementById('lightbox-img');
+    if (lb && img) { img.src = src; lb.classList.add('show'); }
+  }
+  function closeLightbox() {
+    var lb = document.getElementById('lightbox');
+    if (lb) { lb.classList.remove('show'); }
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
   // ─────────────────────────────────────────────────────────────────────────
 
   document.querySelectorAll('.doc-pill[data-href]').forEach(pill => {

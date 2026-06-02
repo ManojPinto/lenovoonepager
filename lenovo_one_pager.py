@@ -2301,7 +2301,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-col_title, col_welcome, col_clock, col_logout = st.columns([5.5, 2, 2.2, 0.6])
+col_title, col_right, col_logout = st.columns([6, 3, 0.6])
 
 with col_title:
     st.markdown("""
@@ -2316,44 +2316,35 @@ with col_title:
       </div>
     </div>""", unsafe_allow_html=True)
 
-with col_welcome:
+with col_right:
     st.markdown(
-        f"<div style='padding:10px 8px 0 0;text-align:right;"
-        f"color:#aaa;font-size:0.82rem;'>"
-        f"&#128100; Welcome, <b style='color:#fff'>{name}</b></div>",
+        f"""<div style='padding:5px 8px 0 0;text-align:right;'>
+          <div style='color:#aaa;font-size:0.82rem;'>
+            &#128100; Welcome, <b style='color:#fff'>{name}</b>
+          </div>
+          <div style='margin-top:4px;'>
+            <span id='ist-date' style='color:#ccc;font-size:0.72rem;font-weight:600;'></span>
+            &nbsp;
+            <span id='ist-time' style='color:#e50000;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;'></span>
+          </div>
+        </div>
+        <img src='x' onerror="
+        (function(){{
+          var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          var D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+          function tick(){{
+            var n=new Date(),i=new Date(n.getTime()+5.5*3600000);
+            var dd=String(i.getUTCDate()).padStart(2,'0');
+            var de=document.getElementById('ist-date');
+            var te=document.getElementById('ist-time');
+            if(de) de.textContent=D[i.getUTCDay()]+', '+dd+' '+M[i.getUTCMonth()]+' '+i.getUTCFullYear();
+            if(te) te.textContent=String(i.getUTCHours()).padStart(2,'0')+':'+String(i.getUTCMinutes()).padStart(2,'0')+':'+String(i.getUTCSeconds()).padStart(2,'0')+' IST';
+          }}
+          tick(); setInterval(tick,1000);
+        }})();
+        " style='display:none'/>""",
         unsafe_allow_html=True
     )
-
-with col_clock:
-    st.markdown("""
-    <div style="padding:6px 8px 0 0;text-align:right;">
-      <div id="ist-date" style="color:#ccc;font-size:0.75rem;font-weight:600;letter-spacing:0.3px;"></div>
-      <div id="ist-time" style="color:#e50000;font-size:0.85rem;font-weight:700;letter-spacing:1px;"></div>
-    </div>
-    <img src="x" onerror="
-    (function(){
-      var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      var D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-      function tick(){
-        var now=new Date();
-        var ist=new Date(now.getTime()+(5.5*60*60*1000));
-        var dd=String(ist.getUTCDate()).padStart(2,'0');
-        var mo=M[ist.getUTCMonth()];
-        var yr=ist.getUTCFullYear();
-        var dw=D[ist.getUTCDay()];
-        var h=String(ist.getUTCHours()).padStart(2,'0');
-        var mi=String(ist.getUTCMinutes()).padStart(2,'0');
-        var s=String(ist.getUTCSeconds()).padStart(2,'0');
-        var de=document.getElementById('ist-date');
-        var te=document.getElementById('ist-time');
-        if(de) de.textContent=dw+', '+dd+' '+mo+' '+yr;
-        if(te) te.textContent=h+':'+mi+':'+s+' IST';
-      }
-      tick();
-      setInterval(tick,1000);
-    })();
-    " style="display:none"/>
-    """, unsafe_allow_html=True)
 
 with col_logout:
     st.markdown("<div style='padding:4px 0 0 0'></div>", unsafe_allow_html=True)

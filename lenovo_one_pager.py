@@ -1025,6 +1025,56 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       letter-spacing: 0.5px;
     }
 
+    /* NOTEPAD (4th banner slot) */
+    .notepad-card {
+      display: flex;
+      flex-direction: column;
+      height: 120px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+    .np-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #e50000;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+    .np-status { color: #22c55e; font-size: 0.66rem; font-weight: 600; }
+    .np-area {
+      flex: 1;
+      width: 100%;
+      resize: none;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.74rem;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 5px 7px;
+      outline: none;
+    }
+    .np-area:focus { border-color: #e50000; }
+    .np-area::placeholder { color: #555; }
+    .np-save {
+      margin-top: 6px;
+      padding: 4px 0;
+      background: #e50000;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .np-save:hover { background: #b30000; }
+
     /* LIGHTBOX (banner popup) */
     .lightbox-overlay {
       display: none;
@@ -1453,7 +1503,14 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png" alt="Banner 3" />
   </div>
 
-  <div class="banner-placeholder">Banner 4 &mdash; coming soon</div>
+  <div class="notepad-card">
+    <div class="np-head">
+      <span>&#128221; My Notepad</span>
+      <span id="npStatus" class="np-status"></span>
+    </div>
+    <textarea id="npText" class="np-area" placeholder="Write your notes here..."></textarea>
+    <button class="np-save" onclick="saveNote()">&#128190; Save</button>
+  </div>
 
 </div>
 
@@ -2071,6 +2128,24 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   }
   // ─────────────────────────────────────────────────────────────────────────
 
+  // ── Personal notepad (saved per logged-in user) ──────────────────────────
+  var NOTE_USER = ___USER_EMAIL___;
+  var NOTE_KEY  = 'lop_note_' + (NOTE_USER || 'guest');
+
+  function loadNote() {
+    var t = document.getElementById('npText');
+    if (t) t.value = localStorage.getItem(NOTE_KEY) || '';
+  }
+  function saveNote() {
+    var t = document.getElementById('npText');
+    if (!t) return;
+    localStorage.setItem(NOTE_KEY, t.value);
+    var s = document.getElementById('npStatus');
+    if (s) { s.textContent = 'Saved!'; setTimeout(function(){ s.textContent=''; }, 2000); }
+  }
+  loadNote();
+  // ─────────────────────────────────────────────────────────────────────────
+
   // ── Banner lightbox popup ─────────────────────────────────────────────────
   function openLightbox(src) {
     var lb  = document.getElementById('lightbox');
@@ -2462,7 +2537,9 @@ _an_json = json.dumps({
     "today":   sum(1 for h in _s.get("login_history",[]) if _today in h.get("time","")),
     "history": _s.get("login_history", [])
 })
+_user_email = json.dumps(st.session_state.get("lenovo_id", "guest"))
 _html = HTML_CONTENT.replace("___ANALYTICS_JSON___", _an_json)
+_html = _html.replace("___USER_EMAIL___", _user_email)
 
 components.html(
     _html + """

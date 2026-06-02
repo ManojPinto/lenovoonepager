@@ -987,6 +987,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     .banner-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+      align-items: start;
       gap: 12px;
       padding: 14px 36px;
       background: rgba(0,0,0,0.25);
@@ -998,11 +999,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
-      background: #0b0b18;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 120px;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .banner-card:hover {
@@ -1012,8 +1008,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
     .banner-card img {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      height: auto;
       display: block;
     }
     /* Placeholder for an empty banner slot */

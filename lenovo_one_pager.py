@@ -2317,33 +2317,38 @@ with col_title:
     </div>""", unsafe_allow_html=True)
 
 with col_right:
+    # Welcome line (static text — markdown is fine here)
     st.markdown(
-        f"""<div style='padding:5px 8px 0 0;text-align:right;'>
-          <div style='color:#aaa;font-size:0.82rem;'>
-            &#128100; Welcome, <b style='color:#fff'>{name}</b>
-          </div>
-          <div style='margin-top:4px;'>
-            <span id='ist-date' style='color:#ccc;font-size:0.72rem;font-weight:600;'></span>
-            &nbsp;
-            <span id='ist-time' style='color:#e50000;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;'></span>
-          </div>
-        </div>
-        <img src='x' onerror="
-        (function(){{
-          var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          var D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-          function tick(){{
-            var n=new Date(),i=new Date(n.getTime()+5.5*3600000);
-            var dd=String(i.getUTCDate()).padStart(2,'0');
-            var de=document.getElementById('ist-date');
-            var te=document.getElementById('ist-time');
-            if(de) de.textContent=D[i.getUTCDay()]+', '+dd+' '+M[i.getUTCMonth()]+' '+i.getUTCFullYear();
-            if(te) te.textContent=String(i.getUTCHours()).padStart(2,'0')+':'+String(i.getUTCMinutes()).padStart(2,'0')+':'+String(i.getUTCSeconds()).padStart(2,'0')+' IST';
-          }}
-          tick(); setInterval(tick,1000);
-        }})();
-        " style='display:none'/>""",
+        f"<div style='padding:5px 8px 0 0;text-align:right;color:#aaa;font-size:0.82rem;'>"
+        f"&#128100; Welcome, <b style='color:#fff'>{name}</b></div>",
         unsafe_allow_html=True
+    )
+    # Live IST clock — rendered via components.html so the JavaScript actually runs
+    components.html(
+        """
+        <div style="text-align:right;font-family:'Segoe UI',Arial,sans-serif;padding-right:8px;">
+          <span id="ist-date" style="color:#cfcfe0;font-size:0.72rem;font-weight:600;"></span>
+          &nbsp;
+          <span id="ist-time" style="color:#ff4d4d;font-size:0.8rem;font-weight:800;letter-spacing:0.5px;"></span>
+        </div>
+        <script>
+          (function(){
+            var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            function tick(){
+              var n=new Date(), i=new Date(n.getTime()+5.5*3600000);
+              var dd=String(i.getUTCDate()).padStart(2,'0');
+              var de=document.getElementById('ist-date');
+              var te=document.getElementById('ist-time');
+              if(de) de.textContent=D[i.getUTCDay()]+', '+dd+' '+M[i.getUTCMonth()]+' '+i.getUTCFullYear();
+              if(te) te.textContent=String(i.getUTCHours()).padStart(2,'0')+':'+String(i.getUTCMinutes()).padStart(2,'0')+':'+String(i.getUTCSeconds()).padStart(2,'0')+' IST';
+            }
+            tick(); setInterval(tick,1000);
+          })();
+        </script>
+        <style>body{margin:0;background:transparent;overflow:hidden;}</style>
+        """,
+        height=30,
     )
 
 with col_logout:

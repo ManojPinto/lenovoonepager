@@ -983,45 +983,34 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       color: #999;
     }
 
-    /* ANNOUNCEMENT BANNERS */
-    .banner-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      padding: 14px 36px;
-      background: rgba(0,0,0,0.25);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    /* ANNOUNCEMENT BANNERS — vertical column on the right */
+    .banner-column {
+      width: 300px;
+      min-width: 300px;
       flex-shrink: 0;
+      background: rgba(0,0,0,0.25);
+      border-left: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px 14px;
+      overflow-y: auto;
     }
     .banner-card {
-      background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: flex-start;
-      gap: 13px;
-      min-height: 110px;
-      transition: background 0.2s, border-color 0.2s;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .banner-card:hover {
-      background: rgba(229,0,0,0.1);
-      border-color: rgba(229,0,0,0.4);
+      border-color: rgba(229,0,0,0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(229,0,0,0.2);
     }
-    .banner-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-    .banner-tag {
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #e50000;
-      margin-bottom: 4px;
-    }
-    .banner-text {
-      font-size: 0.84rem;
-      color: #ccc;
-      font-weight: 500;
-      line-height: 1.45;
+    .banner-card img {
+      width: 100%;
+      display: block;
+      border-radius: 9px;
     }
 
     /* MAIN WRAPPER */
@@ -1395,29 +1384,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BANNERS -->
-<div class="banner-strip">
-
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner1.png"
-         alt="AI Talent Spotlight"
-         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
-  </div>
-
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;">
-    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner2.png"
-         alt="Banner 2"
-         style="width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;" />
-  </div>
-
-  <div class="banner-card" style="padding:0;overflow:hidden;cursor:default;background:#000;display:flex;align-items:center;justify-content:center;">
-    <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png"
-         alt="Banner 3"
-         style="width:100%;height:auto;object-fit:contain;border-radius:10px;display:block;" />
-  </div>
-
-</div>
-
 <!-- MAIN: SIDEBAR + CONTENT -->
 <div class="main-wrapper">
 
@@ -1760,6 +1726,20 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     </div>
 
   </div><!-- /content-panel -->
+
+  <!-- BANNERS — vertical column on the right -->
+  <div class="banner-column">
+    <div class="banner-card">
+      <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner1.png" alt="Banner 1" />
+    </div>
+    <div class="banner-card">
+      <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner2.png" alt="Banner 2" />
+    </div>
+    <div class="banner-card">
+      <img src="https://cdn.jsdelivr.net/gh/ManojPinto/lenovoonepager@main/banner3.png" alt="Banner 3" />
+    </div>
+  </div>
+
 </div><!-- /main-wrapper -->
 
 <footer>

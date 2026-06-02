@@ -2317,19 +2317,17 @@ with col_title:
     </div>""", unsafe_allow_html=True)
 
 with col_right:
-    # Welcome line (static text — markdown is fine here)
-    st.markdown(
-        f"<div style='padding:5px 8px 0 0;text-align:right;color:#aaa;font-size:0.82rem;'>"
-        f"&#128100; Welcome, <b style='color:#fff'>{name}</b></div>",
-        unsafe_allow_html=True
-    )
-    # Live IST clock — rendered via components.html so the JavaScript actually runs
-    components.html(
-        """
-        <div style="text-align:right;font-family:'Segoe UI',Arial,sans-serif;padding-right:8px;">
-          <span id="ist-date" style="color:#cfcfe0;font-size:0.72rem;font-weight:600;"></span>
-          &nbsp;
-          <span id="ist-time" style="color:#ff4d4d;font-size:0.8rem;font-weight:800;letter-spacing:0.5px;"></span>
+    # Welcome + live IST clock together in one iframe (JS runs, no overlap)
+    _clock_html = """
+        <div style="text-align:right;font-family:'Segoe UI',Arial,sans-serif;padding:4px 8px 0 0;">
+          <div style="color:#aaa;font-size:0.82rem;line-height:1.3;">
+            &#128100; Welcome, <b style="color:#fff">__NAME__</b>
+          </div>
+          <div style="margin-top:4px;line-height:1.2;">
+            <span id="ist-date" style="color:#cfcfe0;font-size:0.72rem;font-weight:600;"></span>
+            &nbsp;
+            <span id="ist-time" style="color:#ff4d4d;font-size:0.8rem;font-weight:800;letter-spacing:0.5px;"></span>
+          </div>
         </div>
         <script>
           (function(){
@@ -2347,9 +2345,8 @@ with col_right:
           })();
         </script>
         <style>body{margin:0;background:transparent;overflow:hidden;}</style>
-        """,
-        height=30,
-    )
+    """.replace("__NAME__", name)
+    components.html(_clock_html, height=58)
 
 with col_logout:
     st.markdown("<div style='padding:4px 0 0 0'></div>", unsafe_allow_html=True)

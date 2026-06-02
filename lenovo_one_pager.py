@@ -998,6 +998,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
+      background: #0b0b18;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 120px;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .banner-card:hover {
@@ -1007,8 +1012,8 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     }
     .banner-card img {
       width: 100%;
-      height: 110px;
-      object-fit: cover;
+      height: 100%;
+      object-fit: contain;
       display: block;
     }
     /* Placeholder for an empty banner slot */
@@ -1016,7 +1021,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 110px;
+      height: 120px;
       border: 1px dashed rgba(255,255,255,0.18);
       border-radius: 10px;
       color: #555;

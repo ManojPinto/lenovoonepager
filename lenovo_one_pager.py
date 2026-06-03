@@ -46,11 +46,30 @@ def track_login(email, name):
 # ╚══════════════════════════════════════════════════════════════════════════╝
 
 def sheets_configured():
-    """True only when the Google service-account secret is present."""
+    """True when a service-account secret (either format) + sheet URL exist."""
     try:
-        return ("gcp_service_account" in st.secrets) and ("sheets" in st.secrets)
+        has_creds = ("gcp_service_account_json" in st.secrets) or ("gcp_service_account" in st.secrets)
+        return has_creds and ("sheets" in st.secrets)
     except Exception:
         return False
+
+def _load_sa_info():
+    """Load the service-account dict from either secret format, with a clean key."""
+    import re
+    if "gcp_service_account_json" in st.secrets:
+        # Whole JSON file pasted as one string — most reliable
+        info = json.loads(st.secrets["gcp_service_account_json"])
+    else:
+        info = dict(st.secrets["gcp_service_account"])
+    # Re-wrap the PEM body cleanly regardless of how newlines arrived
+    pk = info.get("private_key", "").replace("\\n", "\n").replace("\r\n", "\n").strip()
+    m = re.search(r"-----BEGIN PRIVATE KEY-----(.*?)-----END PRIVATE KEY-----", pk, re.S)
+    if m:
+        body = re.sub(r"\s+", "", m.group(1))
+        wrapped = "\n".join(body[i:i+64] for i in range(0, len(body), 64))
+        pk = "-----BEGIN PRIVATE KEY-----\n" + wrapped + "\n-----END PRIVATE KEY-----\n"
+    info["private_key"] = pk
+    return info
 
 @st.cache_resource(show_spinner=False)
 def _get_worksheet():
@@ -60,18 +79,7 @@ def _get_worksheet():
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive",
     ]
-    import re
-    info = dict(st.secrets["gcp_service_account"])
-    # Bulletproof private-key normalisation: re-wrap the PEM body cleanly,
-    # regardless of whether newlines arrived escaped, stripped, or doubled.
-    pk = info.get("private_key", "").replace("\\n", "\n").replace("\r\n", "\n").strip()
-    m = re.search(r"-----BEGIN PRIVATE KEY-----(.*?)-----END PRIVATE KEY-----", pk, re.S)
-    if m:
-        body = re.sub(r"\s+", "", m.group(1))
-        wrapped = "\n".join(body[i:i+64] for i in range(0, len(body), 64))
-        pk = "-----BEGIN PRIVATE KEY-----\n" + wrapped + "\n-----END PRIVATE KEY-----\n"
-    info["private_key"] = pk
-    creds = Credentials.from_service_account_info(info, scopes=scopes)
+    creds = Credentials.from_service_account_info(_load_sa_info(), scopes=scopes)
     client = gspread.authorize(creds)
     sh = client.open_by_url(st.secrets["sheets"]["url"])
     ws = sh.sheet1

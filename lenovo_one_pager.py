@@ -9,7 +9,7 @@ Usage:
 
 import streamlit as st
 import streamlit.components.v1 as components
-import json, os
+import json, os, hashlib, secrets as _secrets
 from datetime import datetime
 
 # ── Analytics store (persists across sessions within same deployment) ────────
@@ -40,6 +40,64 @@ def track_login(email, name):
     })
     s["login_history"] = s["login_history"][-2000:]
     save_analytics()
+
+# ╔══════════════════════════════════════════════════════════════════════════╗
+# ║  PASSWORD AUTH — Google Sheets backed (optional, auto-enables w/ secrets)  ║
+# ╚══════════════════════════════════════════════════════════════════════════╝
+
+def sheets_configured():
+    """True only when the Google service-account secret is present."""
+    try:
+        return ("gcp_service_account" in st.secrets) and ("sheets" in st.secrets)
+    except Exception:
+        return False
+
+@st.cache_resource(show_spinner=False)
+def _get_worksheet():
+    import gspread
+    from google.oauth2.service_account import Credentials
+    scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+    creds = Credentials.from_service_account_info(
+        dict(st.secrets["gcp_service_account"]), scopes=scopes
+    )
+    client = gspread.authorize(creds)
+    sh = client.open_by_url(st.secrets["sheets"]["url"])
+    ws = sh.sheet1
+    # Ensure header row exists
+    try:
+        if not ws.acell("A1").value:
+            ws.update("A1:C1", [["email", "password_hash", "created_at"]])
+    except Exception:
+        pass
+    return ws
+
+def _hash_password(password, salt=None):
+    if salt is None:
+        salt = _secrets.token_hex(16)
+    h = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 100_000).hex()
+    return salt + "$" + h
+
+def _verify_password(password, stored):
+    try:
+        salt, h = stored.split("$", 1)
+    except Exception:
+        return False
+    calc = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 100_000).hex()
+    return _secrets.compare_digest(calc, h)
+
+def get_user_record(email):
+    """Return {'row': n, 'hash': str} if the email is registered, else None."""
+    ws = _get_worksheet()
+    rows = ws.get_all_values()
+    for i, row in enumerate(rows):
+        if row and row[0].strip().lower() == email:
+            return {"row": i + 1, "hash": (row[1] if len(row) > 1 else "")}
+    return None
+
+def register_user(email, password):
+    ws = _get_worksheet()
+    ws.append_row([email, _hash_password(password),
+                   datetime.now().strftime("%d %b %Y %H:%M")])
 
 # ── Allowed users: email (lowercase) → display name ────────────────────────
 ALLOWED_USERS = {
@@ -2394,30 +2452,96 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
         </div>
         """, unsafe_allow_html=True)
 
-        with st.form("login_form", clear_on_submit=False):
-            lenovo_id = st.text_input(
-                "Lenovo ID",
-                placeholder="e.g. jsmith@lenovo.com",
-                help="Enter your official Lenovo email address"
-            )
-            submitted = st.form_submit_button("Continue →", use_container_width=True, type="primary")
+        def _finish_login(email):
+            st.session_state["lenovo_id"]   = email
+            st.session_state["lenovo_name"] = ALLOWED_USERS[email]
+            track_login(email, ALLOWED_USERS[email])
+            st.session_state.pop("auth_stage", None)
+            st.session_state.pop("auth_email", None)
+            st.rerun()
 
-        if submitted:
-            val = lenovo_id.strip()
-            if not val:
-                st.error("Please enter your Lenovo ID to continue.")
-            elif val == "88990":
-                # Admin / analytics access
-                st.session_state["lenovo_id"]   = "88990"
-                st.session_state["lenovo_name"] = "Admin"
-                st.session_state["is_admin"]    = True
+        USE_PW = sheets_configured()
+        stage  = st.session_state.get("auth_stage", "email")
+
+        # ── STAGE 1: enter Lenovo ID ───────────────────────────────────────
+        if stage == "email":
+            with st.form("login_form", clear_on_submit=False):
+                lenovo_id = st.text_input(
+                    "Lenovo ID",
+                    placeholder="e.g. jsmith@lenovo.com",
+                    help="Enter your official Lenovo email address"
+                )
+                submitted = st.form_submit_button("Continue →", use_container_width=True, type="primary")
+            if submitted:
+                val = lenovo_id.strip()
+                if not val:
+                    st.error("Please enter your Lenovo ID to continue.")
+                elif val == "88990":
+                    st.session_state["lenovo_id"]   = "88990"
+                    st.session_state["lenovo_name"] = "Admin"
+                    st.session_state["is_admin"]    = True
+                    st.rerun()
+                elif val.lower() not in ALLOWED_USERS:
+                    st.error("Access denied — your email is not on the authorised list.")
+                elif not USE_PW:
+                    # Password auth not configured yet → keep app working (email-only)
+                    _finish_login(val.lower())
+                else:
+                    st.session_state["auth_email"] = val.lower()
+                    try:
+                        rec = get_user_record(val.lower())
+                        st.session_state["auth_stage"] = "enter_pw" if (rec and rec["hash"]) else "set_pw"
+                        st.rerun()
+                    except Exception:
+                        st.error("Could not reach the credentials store. Please try again.")
+
+        # ── STAGE 2a: first-time → create a password ───────────────────────
+        elif stage == "set_pw":
+            email = st.session_state.get("auth_email", "")
+            st.info(f"First-time login for **{email}** — please create a password.")
+            with st.form("set_pw_form"):
+                p1 = st.text_input("Create Password", type="password")
+                p2 = st.text_input("Confirm Password", type="password")
+                submitted = st.form_submit_button("Create & Login →", use_container_width=True, type="primary")
+            if submitted:
+                if len(p1) < 6:
+                    st.error("Password must be at least 6 characters.")
+                elif p1 != p2:
+                    st.error("Passwords do not match.")
+                else:
+                    try:
+                        register_user(email, p1)
+                        _finish_login(email)
+                    except Exception:
+                        st.error("Could not save your password. Please try again.")
+            if st.button("← Use a different ID"):
+                st.session_state.pop("auth_stage", None)
+                st.session_state.pop("auth_email", None)
                 st.rerun()
-            elif val.lower() not in ALLOWED_USERS:
-                st.error("Access denied — your email is not on the authorised list.")
-            else:
-                st.session_state["lenovo_id"]   = val.lower()
-                st.session_state["lenovo_name"] = ALLOWED_USERS[val.lower()]
-                track_login(val.lower(), ALLOWED_USERS[val.lower()])
+
+        # ── STAGE 2b: returning user → enter password ──────────────────────
+        elif stage == "enter_pw":
+            email = st.session_state.get("auth_email", "")
+            st.markdown(
+                f"<p style='text-align:center;color:#aaa;font-size:0.85rem;margin-bottom:6px;'>"
+                f"Welcome back, <b style='color:#fff'>{ALLOWED_USERS.get(email, email)}</b></p>",
+                unsafe_allow_html=True
+            )
+            with st.form("enter_pw_form"):
+                pw = st.text_input("Password", type="password")
+                submitted = st.form_submit_button("Login →", use_container_width=True, type="primary")
+            if submitted:
+                try:
+                    rec = get_user_record(email)
+                    if rec and _verify_password(pw, rec["hash"]):
+                        _finish_login(email)
+                    else:
+                        st.error("Incorrect password.")
+                except Exception:
+                    st.error("Could not reach the credentials store. Please try again.")
+            if st.button("← Use a different ID"):
+                st.session_state.pop("auth_stage", None)
+                st.session_state.pop("auth_email", None)
                 st.rerun()
 
 

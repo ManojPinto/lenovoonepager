@@ -1839,9 +1839,6 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         <a class="link-card" href="https://app.powerbi.com/groups/me/reports/aa1e2faa-2318-4a8e-aec2-1058906fb76d/e82ccc801464d99e9aaa?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi&clientSideAuth=0" target="_blank">
           <span class="dot"></span>IDG Survey Exclusion
         </a>
-        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/aa1e2faa-2318-4a8e-aec2-1058906fb76d/e82ccc801464d99e9aaa?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi&clientSideAuth=0" target="_blank">
-          <span class="dot"></span>IDG Survey Exclusion
-        </a>
         <a class="link-card" href="https://app.powerbi.com/groups/me/reports/5c0855e5-ba8f-46c6-aa75-b8ad257fdce9/79e8d4bd9d46aa5cf3a7?experience=power-bi" target="_blank">
           <span class="dot"></span>Confirmit
         </a>

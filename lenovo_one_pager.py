@@ -56,7 +56,10 @@ def sheets_configured():
 def _get_worksheet():
     import gspread
     from google.oauth2.service_account import Credentials
-    scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive",
+    ]
     creds = Credentials.from_service_account_info(
         dict(st.secrets["gcp_service_account"]), scopes=scopes
     )
@@ -2492,8 +2495,8 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
                         rec = get_user_record(val.lower())
                         st.session_state["auth_stage"] = "enter_pw" if (rec and rec["hash"]) else "set_pw"
                         st.rerun()
-                    except Exception:
-                        st.error("Could not reach the credentials store. Please try again.")
+                    except Exception as e:
+                        st.error(f"Credentials store error → {type(e).__name__}: {e}")
 
         # ── STAGE 2a: first-time → create a password ───────────────────────
         elif stage == "set_pw":
@@ -2537,8 +2540,8 @@ if "lenovo_id" not in st.session_state or not st.session_state["lenovo_id"]:
                         _finish_login(email)
                     else:
                         st.error("Incorrect password.")
-                except Exception:
-                    st.error("Could not reach the credentials store. Please try again.")
+                except Exception as e:
+                    st.error(f"Credentials store error → {type(e).__name__}: {e}")
             if st.button("← Use a different ID"):
                 st.session_state.pop("auth_stage", None)
                 st.session_state.pop("auth_email", None)

@@ -60,9 +60,18 @@ def _get_worksheet():
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive",
     ]
-    creds = Credentials.from_service_account_info(
-        dict(st.secrets["gcp_service_account"]), scopes=scopes
-    )
+    import re
+    info = dict(st.secrets["gcp_service_account"])
+    # Bulletproof private-key normalisation: re-wrap the PEM body cleanly,
+    # regardless of whether newlines arrived escaped, stripped, or doubled.
+    pk = info.get("private_key", "").replace("\\n", "\n").replace("\r\n", "\n").strip()
+    m = re.search(r"-----BEGIN PRIVATE KEY-----(.*?)-----END PRIVATE KEY-----", pk, re.S)
+    if m:
+        body = re.sub(r"\s+", "", m.group(1))
+        wrapped = "\n".join(body[i:i+64] for i in range(0, len(body), 64))
+        pk = "-----BEGIN PRIVATE KEY-----\n" + wrapped + "\n-----END PRIVATE KEY-----\n"
+    info["private_key"] = pk
+    creds = Credentials.from_service_account_info(info, scopes=scopes)
     client = gspread.authorize(creds)
     sh = client.open_by_url(st.secrets["sheets"]["url"])
     ws = sh.sheet1

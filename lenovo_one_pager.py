@@ -1733,6 +1733,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         <a class="link-card" href="https://app.powerbi.com/groups/0c95cce5-7a26-4922-9cf8-5fbdb5cc4430/reports/c8c77845-0205-4834-b052-122c3b8a39af/d3196307e08e1c260b01?experience=power-bi" target="_blank">
           <span class="dot"></span>QA
         </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/64f7f527-3669-41d8-8e1f-bcc908e5ba3b/reports/9f30e6e5-4153-4476-90cb-fbdc0bc55ad0/ReportSection41a17587c67ff171bb32?experience=power-bi&bookmarkGuid=91a36f35-7ede-43c1-b7af-6bc009a8cc76" target="_blank">
+          <span class="dot"></span>PPSN
+        </a>
       </div>
     </div>
 

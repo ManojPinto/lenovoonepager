@@ -1736,6 +1736,36 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         <a class="link-card" href="https://app.powerbi.com/groups/64f7f527-3669-41d8-8e1f-bcc908e5ba3b/reports/9f30e6e5-4153-4476-90cb-fbdc0bc55ad0/ReportSection41a17587c67ff171bb32?experience=power-bi&bookmarkGuid=91a36f35-7ede-43c1-b7af-6bc009a8cc76" target="_blank">
           <span class="dot"></span>PPSN
         </a>
+          <a class="link-card" href="https://app.powerbi.com/groups/me/reports/02e287f0-fbdc-4c13-aada-7abd745f16e8/ReportSection?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi&clientSideAuth=0" target="_blank">
+          <span class="dot"></span>T3B
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/f4e4b541-112c-4dae-85a5-a1cede5c735b/ReportSectionbb8a8c00cc4048595ae0?experience=power-bi&clientSideAuth=0" target="_blank">
+          <span class="dot"></span>RIR
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/da90c804-e705-41b0-9265-167e9dbb0b10/ReportSectione67917b0c00c2200e347?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&openReportSource=SubscribeOthers&experience=power-bi" target="_blank">
+          <span class="dot"></span>Open SR
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/33b907b1-6361-4585-9682-ed9098b48dac/ReportSection2ffdbb4df91cd3fe00e0?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi&clientSideAuth=0" target="_blank">
+          <span class="dot"></span>SR to SO
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/907336cd-e778-44e5-9b07-06ffc6616f64/254441fa42de004de831?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi" target="_blank">
+          <span class="dot"></span>Info Call Non-Complainace
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/e790808c-7df7-4c19-a675-3838fa8f4fba/58a12ff0d09e1ffb1fa1?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi" target="_blank">
+          <span class="dot"></span>Productivity
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/59cfdc9b-8239-4270-b62b-43536e5303c3/bbf080f650bd016eb3b7?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&openReportSource=ReportInvitation&experience=power-bi&clientSideAuth=0" target="_blank">
+          <span class="dot"></span>B&B
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/aa1e2faa-2318-4a8e-aec2-1058906fb76d/e82ccc801464d99e9aaa?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi&clientSideAuth=0" target="_blank">
+          <span class="dot"></span>IDG Survey Exclusion
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/aa1e2faa-2318-4a8e-aec2-1058906fb76d/e82ccc801464d99e9aaa?ctid=5c7d0b28-bdf8-410c-aa93-4df372b16203&experience=power-bi&clientSideAuth=0" target="_blank">
+          <span class="dot"></span>IDG Survey Exclusion
+        </a>
+        <a class="link-card" href="https://app.powerbi.com/groups/me/reports/5c0855e5-ba8f-46c6-aa75-b8ad257fdce9/79e8d4bd9d46aa5cf3a7?experience=power-bi" target="_blank">
+          <span class="dot"></span>Confirmit
+        </a>
       </div>
     </div>
 

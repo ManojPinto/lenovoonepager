@@ -1747,10 +1747,10 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         <div class="phone-block">
           <h3>Direct Transfer Number</h3>
           <ul>
-            <li><strong>Commercial</strong><span>12409</span></li>
-            <li><strong>Consumer</strong><span>12428</span></li>
-            <li><strong>Premium Care</strong><span>12421</span></li>
-            <li><strong>Premier Support</strong><span>12419</span></li>
+            <li><strong>Commercial</strong><span>13444</span></li>
+            <li><strong>Consumer</strong><span>13441</span></li>
+            <li><strong>Premium Care</strong><span>13442</span></li>
+            <li><strong>Premier Support</strong><span>13443</span></li>
             <li><strong>MBG (Smartphone)</strong><span>13440</span></li>
             <li><strong>Tablet</strong><span>12429</span></li>
             <li><strong>FS-Think</strong><span>12430</span></li>

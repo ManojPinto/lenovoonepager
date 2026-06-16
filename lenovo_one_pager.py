@@ -1850,21 +1850,23 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     </div>
 
     <!-- SMART CEC - L1 (Copilot Studio chatbot — embedded) -->
-    <div class="panel" id="smartcec" style="padding:0;height:100%;display:flex;flex-direction:column;">
-      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
-        <div style="font-size:1.1rem;font-weight:700;color:#fff;flex:1;">&#129302; Smart CEC - L1</div>
-        <a href="https://copilotstudio.microsoft.com/environments/8d873b03-aeda-eebb-881d-f721db133f8c/bots/crce4_SmartCECL1/webchat?__version__=2" target="_blank"
-           style="padding:8px 16px;background:#e50000;border-radius:7px;color:#fff;
-                  font-size:0.82rem;font-weight:600;text-decoration:none;white-space:nowrap;">
-           Open in new tab &#8599;
-        </a>
-      </div>
-      <div style="position:relative;flex:1;min-height:0;background:#fff;">
-        <iframe src="https://copilotstudio.microsoft.com/environments/8d873b03-aeda-eebb-881d-f721db133f8c/bots/crce4_SmartCECL1/webchat?__version__=2"
-                frameborder="0"
-                style="width:100%;height:100%;border:none;"
-                title="Smart CEC - L1"
-                allow="microphone; clipboard-read; clipboard-write"></iframe>
+    <div class="panel" id="smartcec">
+      <div style="display:flex;flex-direction:column;height:74vh;min-height:520px;">
+        <div style="display:flex;align-items:center;gap:14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
+          <div style="font-size:1.2rem;font-weight:700;color:#fff;flex:1;">&#129302; Smart CEC - L1</div>
+          <a href="https://copilotstudio.microsoft.com/environments/8d873b03-aeda-eebb-881d-f721db133f8c/bots/crce4_SmartCECL1/webchat?__version__=2" target="_blank"
+             style="padding:8px 16px;background:#e50000;border-radius:7px;color:#fff;
+                    font-size:0.82rem;font-weight:600;text-decoration:none;white-space:nowrap;">
+             Open in new tab &#8599;
+          </a>
+        </div>
+        <div style="position:relative;flex:1;min-height:0;background:#fff;border-radius:0 0 10px 10px;margin-top:12px;border-radius:10px;overflow:hidden;">
+          <iframe src="https://copilotstudio.microsoft.com/environments/8d873b03-aeda-eebb-881d-f721db133f8c/bots/crce4_SmartCECL1/webchat?__version__=2"
+                  frameborder="0"
+                  style="width:100%;height:100%;border:none;"
+                  title="Smart CEC - L1"
+                  allow="microphone; clipboard-read; clipboard-write"></iframe>
+        </div>
       </div>
     </div>
 

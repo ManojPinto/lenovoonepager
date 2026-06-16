@@ -1624,6 +1624,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     <div class="nav-item" data-target="powerbi">
       <span class="nav-icon">&#128268;</span> Power BI Links
     </div>
+    <div class="nav-item" data-target="smartcec">
+      <span class="nav-icon">&#129302;</span> Smart CEC - L1
+    </div>
     <div class="nav-item" data-target="mdoa">
       <span class="nav-icon">&#128203;</span> MDOA Criteria Check *UNDER TESTING
     </div>
@@ -1843,6 +1846,23 @@ HTML_CONTENT = r"""<!DOCTYPE html>
         <a class="link-card" href="https://app.powerbi.com/groups/me/reports/5c0855e5-ba8f-46c6-aa75-b8ad257fdce9/79e8d4bd9d46aa5cf3a7?experience=power-bi" target="_blank">
           <span class="dot"></span>Confirmit
         </a>
+      </div>
+    </div>
+
+    <!-- SMART CEC - L1 (embedded web page) -->
+    <div class="panel" id="smartcec" style="padding:0;height:100%;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
+        <div style="font-size:1.1rem;font-weight:700;color:#fff;flex:1;">&#129302; Smart CEC - L1</div>
+        <a href="https://smartcecl1.powerappsportals.com" target="_blank"
+           style="padding:8px 16px;background:#e50000;border-radius:7px;color:#fff;
+                  font-size:0.82rem;font-weight:600;text-decoration:none;white-space:nowrap;">
+           Open in new tab &#8599;
+        </a>
+      </div>
+      <div style="position:relative;flex:1;min-height:0;">
+        <iframe src="https://smartcecl1.powerappsportals.com"
+                style="width:100%;height:100%;border:none;background:#fff;"
+                title="Smart CEC - L1"></iframe>
       </div>
     </div>
 

@@ -1849,34 +1849,22 @@ HTML_CONTENT = r"""<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- SMART CEC - L1 (launch screen — portal blocks embedding) -->
-    <div class="panel" id="smartcec">
-      <div class="panel-title">&#129302; Smart CEC - L1</div>
-      <div style="display:flex;align-items:center;justify-content:center;padding:40px 20px;">
-        <div style="max-width:520px;width:100%;text-align:center;
-                    background:linear-gradient(135deg,#1a1a2e,#2d0036);
-                    border:1px solid rgba(229,0,0,0.3);border-radius:18px;
-                    padding:48px 40px;">
-          <div style="font-size:3.4rem;margin-bottom:14px;">&#129302;</div>
-          <h2 style="font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:12px;">
-            Smart CEC - L1
-          </h2>
-          <p style="color:#aaa;font-size:0.9rem;line-height:1.6;margin-bottom:30px;">
-            The Smart CEC portal opens in its own secure window. It requires your
-            Microsoft sign-in and cannot be displayed inside another page for
-            security reasons. Click below to launch it &mdash; it stays signed in
-            and ready to use.
-          </p>
-          <a href="https://smartcecl1.powerappsportals.com" target="_blank"
-             style="display:inline-block;padding:15px 40px;background:#e50000;
-                    color:#fff;font-weight:700;font-size:1rem;border-radius:10px;
-                    text-decoration:none;box-shadow:0 6px 20px rgba(229,0,0,0.35);">
-             &#128640; Launch Smart CEC - L1 &#8599;
-          </a>
-          <p style="color:#555;font-size:0.72rem;margin-top:22px;">
-            Opens in a new browser tab &bull; smartcecl1.powerappsportals.com
-          </p>
-        </div>
+    <!-- SMART CEC - L1 (Copilot Studio chatbot — embedded) -->
+    <div class="panel" id="smartcec" style="padding:0;height:100%;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
+        <div style="font-size:1.1rem;font-weight:700;color:#fff;flex:1;">&#129302; Smart CEC - L1</div>
+        <a href="https://copilotstudio.microsoft.com/environments/8d873b03-aeda-eebb-881d-f721db133f8c/bots/crce4_SmartCECL1/webchat?__version__=2" target="_blank"
+           style="padding:8px 16px;background:#e50000;border-radius:7px;color:#fff;
+                  font-size:0.82rem;font-weight:600;text-decoration:none;white-space:nowrap;">
+           Open in new tab &#8599;
+        </a>
+      </div>
+      <div style="position:relative;flex:1;min-height:0;background:#fff;">
+        <iframe src="https://copilotstudio.microsoft.com/environments/8d873b03-aeda-eebb-881d-f721db133f8c/bots/crce4_SmartCECL1/webchat?__version__=2"
+                frameborder="0"
+                style="width:100%;height:100%;border:none;"
+                title="Smart CEC - L1"
+                allow="microphone; clipboard-read; clipboard-write"></iframe>
       </div>
     </div>
 
